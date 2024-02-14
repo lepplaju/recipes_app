@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:recipe_app/models/recipe.dart';
 
 class RecipeList extends StatefulWidget {
+  const RecipeList({super.key});
+
   State<RecipeList> createState() => _RecipeListState();
 }
 

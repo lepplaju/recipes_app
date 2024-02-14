@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:recipe_app/screens/navigation_example_page.dart';
 import 'package:recipe_app/screens/recipe_page.dart';
+import 'package:recipe_app/widgets/custom_top_bar.dart';
 
 final GoRouter _router = GoRouter(
   routes: <RouteBase>[
@@ -42,15 +43,7 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-          appBar: AppBar(
-              leadingWidth: 100,
-              centerTitle: true,
-              leading: Center(child: const Text('Recipes App!')),
-              title: TextField(
-                  decoration: InputDecoration(
-                hintText: "Search Data...",
-                hintStyle: TextStyle(color: Colors.blueGrey[200]),
-              ))),
+          appBar: CustomTopBar(),
           body: const Center(
             child: Text('Hello World!'),
           ),

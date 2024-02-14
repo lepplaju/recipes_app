@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app/screens/recipe_page.dart';
 import 'package:recipe_app/screens/recipes_listView.dart';
+import 'package:recipe_app/widgets/custom_top_bar.dart';
 
 class NavigationExample extends StatefulWidget {
   const NavigationExample({super.key});
@@ -16,15 +17,7 @@ class _NavigationExampleState extends State<NavigationExample> {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(
-          leadingWidth: 100,
-          centerTitle: true,
-          leading: Center(child: const Text('Recipes App!')),
-          title: TextField(
-              decoration: InputDecoration(
-            hintText: "Search Data...",
-            hintStyle: TextStyle(color: Colors.blueGrey[200]),
-          ))),
+      appBar: CustomTopBar(),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
           setState(() {
