@@ -1,20 +1,76 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:recipe_app/screens/navigation_example_page.dart';
+import 'package:recipe_app/screens/recipe_page.dart';
+
+final GoRouter _router = GoRouter(
+  routes: <RouteBase>[
+    GoRoute(
+      path: '/',
+      builder: (BuildContext context, GoRouterState state) {
+        return const NavigationExample();
+      },
+      routes: <RouteBase>[
+        GoRoute(
+          path: 'recipe',
+          builder: (BuildContext context, GoRouterState state) {
+            return RecipePage();
+          },
+        ),
+      ],
+    ),
+  ],
+);
 
 void main() {
-  runApp(const MainApp());
+  runApp(StartApp());
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class StartApp extends StatelessWidget {
+  const StartApp({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp.router(
+        debugShowCheckedModeBanner: false, routerConfig: _router);
+  }
+}
+
+class MainPage extends StatelessWidget {
+  const MainPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
+          appBar: AppBar(
+              leadingWidth: 100,
+              centerTitle: true,
+              leading: Center(child: const Text('Recipes App!')),
+              title: TextField(
+                  decoration: InputDecoration(
+                hintText: "Search Data...",
+                hintStyle: TextStyle(color: Colors.blueGrey[200]),
+              ))),
+          body: const Center(
+            child: Text('Hello World!'),
+          ),
+          bottomNavigationBar: NavigationBar(
+            destinations: [
+              NavigationDestination(
+                  icon: Icon(Icons.account_circle), label: 'Account'),
+              NavigationDestination(
+                  icon: Icon(Icons.account_circle), label: 'trending')
+            ],
+          )
+          // BottomNavigationBar(
+          //   items: const [
+          //     BottomNavigationBarItem(
+          //         icon: Icon(Icons.account_circle), label: 'Account'),
+          //     BottomNavigationBarItem(
+          //         icon: Icon(Icons.trending_up_rounded), label: 'Trending', )
+          //   ],
+          // ),
+          ),
     );
   }
 }

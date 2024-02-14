@@ -9,6 +9,7 @@
 .history
 .svn/
 migrate_working_dir/
+todos.txt
 
 # IntelliJ related
 *.iml
@@ -91,3 +92,4 @@ pubspec.lock
 !**/ios/**/default.pbxuser
 !**/ios/**/default.perspectivev3
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
+
