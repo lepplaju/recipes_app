@@ -3,10 +3,11 @@ import 'package:recipe_app/models/mock_data.dart';
 import 'package:recipe_app/models/recipe.dart';
 
 class RecipePage extends StatelessWidget {
-  Recipe recipeToShow = MockRecipeData().getRandomRecipe();
+  final Recipe recipeToShow = MockRecipeData().getRandomRecipe();
+
+  RecipePage({super.key});
   @override
   Widget build(BuildContext context) {
-    print(recipeToShow);
     return Scaffold(
         body: Center(
             child: Column(children: [
