@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_app/screens/category_page.dart';
 import 'package:recipe_app/screens/recipe_page.dart';
 import 'package:recipe_app/screens/recipes_listView.dart';
 import 'package:recipe_app/widgets/custom_top_bar.dart';
@@ -33,8 +34,8 @@ class _NavigationExampleState extends State<NavigationExample> {
             label: 'Home',
           ),
           NavigationDestination(
-            icon: Icon(Icons.notifications_sharp),
-            label: 'Notifications',
+            icon: Icon(Icons.topic_outlined),
+            label: 'Categories',
           ),
           NavigationDestination(
             icon: Icon(Icons.list_alt_outlined),
@@ -63,30 +64,10 @@ class _NavigationExampleState extends State<NavigationExample> {
           ),
         ),
 
-        /// Recipes page
-        const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Column(
-            children: <Widget>[
-              Card(
-                child: ListTile(
-                  leading: Icon(Icons.notifications_sharp),
-                  title: Text('Notification 1'),
-                  subtitle: Text('This is a notification'),
-                ),
-              ),
-              Card(
-                child: ListTile(
-                  leading: Icon(Icons.notifications_sharp),
-                  title: Text('Notification 2'),
-                  subtitle: Text('This is a notification'),
-                ),
-              ),
-            ],
-          ),
-        ),
+        /// Categories page
+        CategoriesPage(),
 
-        /// Messages page
+        /// Recipes page
         RecipeList(),
 
         // Trending page

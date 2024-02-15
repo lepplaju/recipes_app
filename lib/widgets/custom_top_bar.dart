@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_app/models/mock_data.dart';
 import 'package:recipe_app/models/recipe.dart';
 
 class CustomTopBar extends StatefulWidget implements PreferredSizeWidget {
@@ -18,7 +19,7 @@ class _CustomTopBarState extends State<CustomTopBar> {
 
   @override
   Widget build(BuildContext context) {
-    List<Recipe> tempRecipes = Recipe.tempRecipeList;
+    List<Recipe> tempRecipes = MockRecipeData().getRecipes();
     return AppBar(
         leadingWidth: 100,
         centerTitle: true,
@@ -27,14 +28,18 @@ class _CustomTopBarState extends State<CustomTopBar> {
           Column(
             children: <Widget>[
               SearchAnchor(
+                  viewBackgroundColor: Colors.amber,
                   searchController: controller,
                   builder: (BuildContext context, SearchController controller) {
-                    return IconButton(
-                      icon: const Icon(Icons.search),
-                      onPressed: () {
-                        controller.openView();
-                      },
-                    );
+                    return Center(
+                        child: Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: IconButton(
+                              icon: const Icon(Icons.search),
+                              onPressed: () {
+                                controller.openView();
+                              },
+                            )));
                   },
                   suggestionsBuilder:
                       (BuildContext context, SearchController controller) {

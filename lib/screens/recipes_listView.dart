@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_app/models/mock_data.dart';
 import 'package:recipe_app/models/recipe.dart';
 
 class RecipeList extends StatefulWidget {
@@ -9,7 +10,7 @@ class RecipeList extends StatefulWidget {
 
 class _RecipeListState extends State<RecipeList> {
   Widget build(BuildContext context) {
-    List<Recipe> tempRecipes = Recipe.tempRecipeList;
+    List<Recipe> tempRecipes = MockRecipeData().getRecipes();
 
     return ListView.builder(
       itemCount: tempRecipes.length,
