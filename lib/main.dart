@@ -35,35 +35,3 @@ class StartApp extends StatelessWidget {
         debugShowCheckedModeBanner: false, routerConfig: _router);
   }
 }
-
-class MainPage extends StatelessWidget {
-  const MainPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-          appBar: CustomTopBar(),
-          body: const Center(
-            child: Text('Hello World!'),
-          ),
-          bottomNavigationBar: NavigationBar(
-            destinations: [
-              NavigationDestination(
-                  icon: Icon(Icons.account_circle), label: 'Account'),
-              NavigationDestination(
-                  icon: Icon(Icons.account_circle), label: 'trending')
-            ],
-          )
-          // BottomNavigationBar(
-          //   items: const [
-          //     BottomNavigationBarItem(
-          //         icon: Icon(Icons.account_circle), label: 'Account'),
-          //     BottomNavigationBarItem(
-          //         icon: Icon(Icons.trending_up_rounded), label: 'Trending', )
-          //   ],
-          // ),
-          ),
-    );
-  }
-}

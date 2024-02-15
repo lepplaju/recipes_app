@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:recipe_app/models/mock_data.dart';
 import 'package:recipe_app/models/recipe.dart';
 
@@ -15,7 +16,11 @@ class _RecipeListState extends State<RecipeList> {
     return ListView.builder(
       itemCount: tempRecipes.length,
       itemBuilder: (context, index) {
-        return ListTile(title: Text('${tempRecipes[index].name}'));
+        return InkWell(
+            onTap: () {
+              context.go('/recipe');
+            },
+            child: ListTile(title: Text('${tempRecipes[index].name}')));
       },
     );
   }

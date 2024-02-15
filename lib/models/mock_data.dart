@@ -1,6 +1,5 @@
 import "dart:math";
 
-import "package:flutter/foundation.dart";
 import "package:recipe_app/models/recipe.dart";
 
 class MockRecipeData {
@@ -151,5 +150,10 @@ class MockRecipeData {
 
   List<String> getCategories() {
     return categories;
+  }
+
+  Recipe getRandomRecipe() {
+    mockRecipes.shuffle();
+    return mockRecipes.first;
   }
 }

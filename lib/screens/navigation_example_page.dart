@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app/screens/category_page.dart';
+import 'package:recipe_app/screens/main_page.dart';
 import 'package:recipe_app/screens/recipe_page.dart';
 import 'package:recipe_app/screens/recipes_listView.dart';
 import 'package:recipe_app/widgets/custom_top_bar.dart';
@@ -51,18 +52,7 @@ class _NavigationExampleState extends State<NavigationExample> {
       ),
       body: <Widget>[
         /// Home page
-        Card(
-          shadowColor: Colors.transparent,
-          margin: const EdgeInsets.all(8.0),
-          child: SizedBox.expand(
-            child: Center(
-              child: Text(
-                'Home page',
-                style: theme.textTheme.titleLarge,
-              ),
-            ),
-          ),
-        ),
+        MainPage(),
 
         /// Categories page
         CategoriesPage(),
