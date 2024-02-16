@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:recipe_app/models/mock_data.dart';
 import 'package:recipe_app/models/recipe.dart';
+import 'package:recipe_app/providers/recipe_provider.dart';
 
-class RecipeList extends StatefulWidget {
-  const RecipeList({super.key});
-
-  State<RecipeList> createState() => _RecipeListState();
-}
-
-class _RecipeListState extends State<RecipeList> {
-  Widget build(BuildContext context) {
-    List<Recipe> tempRecipes = MockRecipeData().getRecipes();
+class RecipeList extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    var tempRecipes = ref.watch(recipeProvider);
+    print("TEMP RECIPES:$tempRecipes");
 
     return ListView.builder(
       itemCount: tempRecipes.length,
@@ -20,7 +18,8 @@ class _RecipeListState extends State<RecipeList> {
             onTap: () {
               context.go('/recipe');
             },
-            child: ListTile(title: Text('${tempRecipes[index].name}')));
+            child: Text(
+                'hello $index')); //ListTile(title: Text('${tempRecipes[index].name}')));
       },
     );
   }

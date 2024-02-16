@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app/screens/category_page.dart';
 import 'package:recipe_app/screens/main_page.dart';
+import 'package:recipe_app/screens/new_recipe_page.dart';
 import 'package:recipe_app/screens/recipe_page.dart';
 import 'package:recipe_app/screens/recipes_listView.dart';
 import 'package:recipe_app/widgets/custom_top_bar.dart';
@@ -47,6 +48,12 @@ class _NavigationExampleState extends State<NavigationExample> {
             ),
             label: 'Trending',
           ),
+          NavigationDestination(
+            icon: Icon(
+              Icons.add_box_rounded,
+            ),
+            label: 'Add new recipe ',
+          ),
         ],
       ),
       body: <Widget>[
@@ -60,7 +67,10 @@ class _NavigationExampleState extends State<NavigationExample> {
         RecipeList(),
 
         // Trending page
-        Padding(padding: EdgeInsets.all(10), child: RecipePage())
+        Padding(padding: EdgeInsets.all(10), child: RecipeWidget()),
+
+        // Add new recipe page
+        RecipePageConsumer(),
       ][currentPageIndex],
     );
   }

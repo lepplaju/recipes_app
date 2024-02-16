@@ -21,6 +21,7 @@ class MockRecipeData {
 
   static List<Recipe> mockRecipes = [
     Recipe(
+      id: 'ab',
       name: "Spaghetti Carbonara",
       ingredients: [
         "8 ounces spaghetti",
@@ -44,6 +45,7 @@ class MockRecipeData {
       category: categories[Random().nextInt(categories.length)],
     ),
     Recipe(
+      id: 'ab',
       name: "Caesar Salad",
       ingredients: [
         "1 head romaine lettuce, chopped",
@@ -64,6 +66,7 @@ class MockRecipeData {
       category: categories[Random().nextInt(categories.length)],
     ),
     Recipe(
+      id: 'ab',
       name: "Chicken Stir-Fry with Vegetables",
       ingredients: [
         "2 boneless, skinless chicken breasts, thinly sliced",
@@ -87,6 +90,7 @@ class MockRecipeData {
       category: categories[Random().nextInt(categories.length)],
     ),
     Recipe(
+      id: 'ab',
       name: "Chocolate Chip Cookies",
       ingredients: [
         "2 1/4 cups all-purpose flour",
@@ -111,6 +115,7 @@ class MockRecipeData {
       category: categories[Random().nextInt(categories.length)],
     ),
     Recipe(
+      id: 'ab',
       name: "Vegetable Lentil Soup",
       ingredients: [
         "1 cup dried green or brown lentils, rinsed",
@@ -138,8 +143,39 @@ class MockRecipeData {
       category: categories[Random().nextInt(categories.length)],
     ),
     Recipe(
+        id: 'ab',
         name: "doodoo",
         ingredients: ['milk'],
+        steps: ['nothing'],
+        category: categories[Random().nextInt(categories.length)]),
+    Recipe(
+        id: 'ab',
+        name: "temporary",
+        ingredients: ['milk'],
+        steps: ['nothing'],
+        category: categories[Random().nextInt(categories.length)]),
+    Recipe(
+        id: 'ab',
+        name: "temporary2",
+        ingredients: ['milk'],
+        steps: ['nothing'],
+        category: categories[Random().nextInt(categories.length)]),
+    Recipe(
+        id: 'ab',
+        name: "temporary3",
+        ingredients: ['milk'],
+        steps: ['nothing'],
+        category: categories[Random().nextInt(categories.length)]),
+    Recipe(
+        id: 'ab',
+        name: "temporary5",
+        ingredients: ['milk'],
+        steps: ['nothing'],
+        category: categories[Random().nextInt(categories.length)]),
+    Recipe(
+        id: 'ab',
+        name: "pumpkin pie",
+        ingredients: ['milk, sugar'],
         steps: ['nothing'],
         category: categories[Random().nextInt(categories.length)]),
   ];

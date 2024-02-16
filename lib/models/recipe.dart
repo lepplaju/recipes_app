@@ -1,13 +1,35 @@
-// the recipe name, the recipe ingredients, and the recipe steps.
+// the recipe name, the recipe ingredients, and the recipe steps
 class Recipe {
+  final String id;
   String name;
-  List<String> ingredients;
-  List<String> steps;
+  List<dynamic> ingredients;
+  List<dynamic> steps;
   String category;
 
   Recipe(
-      {required this.name,
+      {required this.id,
+      required this.name,
       required this.ingredients,
       required this.steps,
-      this.category = ''});
+      this.category = ""});
+
+  factory Recipe.fromFirestore(Map<String, dynamic> data, String id) {
+    print("DATA IN RECIPE: $data");
+    return Recipe(
+      id: id,
+      name: data["name"],
+      ingredients: data["ingredients"],
+      steps: data["steps"],
+      category: data["category"],
+    );
+  }
+  Map<String, dynamic> toFirestore() {
+    return {
+      'id': id,
+      'name': name,
+      'ingredients': ingredients,
+      'steps': steps,
+      "category": category
+    };
+  }
 }
