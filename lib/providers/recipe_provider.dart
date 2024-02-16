@@ -43,7 +43,6 @@ class RecipeNotifier extends StateNotifier<List<Recipe>> {
       steps: recipeToAdd.steps,
     ).toFirestore();
 
-    print(recipeData);
     final recipeRef =
         await _firestore.collection('recipes_collection').add(recipeData);
     final recipe = Recipe.fromFirestore(recipeData, recipeRef.id);

@@ -3,8 +3,8 @@ import 'package:recipe_app/models/mock_data.dart';
 import 'package:recipe_app/models/recipe.dart';
 
 class CustomTopBar extends StatefulWidget implements PreferredSizeWidget {
-  CustomTopBar({Key? key})
-      : preferredSize = Size.fromHeight(kToolbarHeight),
+  const CustomTopBar({Key? key})
+      : preferredSize = const Size.fromHeight(kToolbarHeight),
         super(key: key);
 
   @override
@@ -44,7 +44,7 @@ class _CustomTopBarState extends State<CustomTopBar> {
                   suggestionsBuilder:
                       (BuildContext context, SearchController controller) {
                     return tempRecipes.map((recipe) {
-                      final String recipeName = '${recipe.name}';
+                      final String recipeName = recipe.name;
                       return ListTile(
                         title: Text(recipeName),
                         onTap: () {

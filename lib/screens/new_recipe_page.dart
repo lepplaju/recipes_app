@@ -15,6 +15,8 @@ import 'package:recipe_app/providers/recipe_provider.dart';
 // }
 
 class RecipePageConsumer extends ConsumerWidget {
+  const RecipePageConsumer({super.key});
+
   idGenerator() {
     final now = DateTime.now();
     return now.microsecondsSinceEpoch.toString();
@@ -27,71 +29,70 @@ class RecipePageConsumer extends ConsumerWidget {
     final stepsController = TextEditingController();
     final nameController = TextEditingController();
 
-    _addRecipe(String name, String category, String ingredients, String steps) {
-      var mock_id = idGenerator();
+    addRecipe(String name, String category, String ingredients, String steps) {
+      var mockId = idGenerator();
       var newRecipe = Recipe(
-          id: mock_id,
+          id: mockId,
           name: name,
           category: category,
           ingredients: [ingredients],
           steps: [steps]);
-      print("new recipe: ${newRecipe.name}");
       ref.watch(recipeProvider.notifier).addRecipe(newRecipe);
     }
 
     return Scaffold(
         body: Expanded(
             child: Container(
-                margin: EdgeInsets.all(10),
+                margin: const EdgeInsets.all(10),
                 child: Column(children: [
-                  Text('hello world'),
+                  const Text('hello world'),
                   Row(children: [
-                    Text("Name:"),
+                    const Text("Name:"),
                     Expanded(
                         child: Container(
-                            margin: EdgeInsets.all(20),
+                            margin: const EdgeInsets.all(20),
                             child: TextField(
                               controller: nameController,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
                                 labelText: 'Name',
                               ),
                             ))),
                   ]),
                   Row(children: [
-                    Text("Category:"),
+                    const Text("Category:"),
                     Expanded(
                         child: Container(
-                            margin: EdgeInsets.all(20),
+                            margin: const EdgeInsets.all(20),
                             child: TextField(
                               controller: categoryController,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
                                 labelText: 'Category',
                               ),
                             ))),
                   ]),
                   Row(children: [
-                    Text("Ingredients:"),
+                    const Text("Ingredients:"),
                     Expanded(
                         child: Container(
-                            margin: EdgeInsets.all(20),
+                            margin: const EdgeInsets.all(20),
                             child: TextField(
                               controller: ingredientsController,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
                                 labelText: 'Ingredients',
                               ),
                             ))),
                   ]),
                   Row(children: [
-                    Text("Steps:"),
+                    const Text("Steps:"),
                     Expanded(
                         child: Container(
-                            margin: EdgeInsets.all(20),
+                            margin: const EdgeInsets.all(20),
                             child: TextField(
                               controller: stepsController,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
                                 labelText: 'Steps',
                               ),
@@ -103,7 +104,7 @@ class RecipePageConsumer extends ConsumerWidget {
                             categoryController.text.isNotEmpty &
                             ingredientsController.text.isNotEmpty &
                             stepsController.text.isNotEmpty) {
-                          _addRecipe(
+                          addRecipe(
                               nameController.text.toString(),
                               categoryController.text.toString(),
                               ingredientsController.text.toString(),
@@ -116,7 +117,7 @@ class RecipePageConsumer extends ConsumerWidget {
                           print("invalid");
                         }
                       },
-                      child: Text("Add recipe")),
+                      child: const Text("Add recipe")),
                 ]))));
   }
 }

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:recipe_app/models/mock_data.dart';
 
 class CategoriesPage extends StatelessWidget {
+  const CategoriesPage({super.key});
+
   @override
   build(BuildContext context) {
     List<String> categories = MockRecipeData().getCategories();
@@ -12,12 +14,12 @@ class CategoriesPage extends StatelessWidget {
             print('todo');
           },
           child: Card(
-              margin: EdgeInsets.all(10),
+              margin: const EdgeInsets.all(10),
               child: Padding(
-                  padding: EdgeInsets.all(15), child: Text('$category'))));
+                  padding: const EdgeInsets.all(15), child: Text(category))));
     }).toList();
     return Center(
-        child:
-            ListView(children: [Text("Choose a category:"), ...customwidgets]));
+        child: ListView(
+            children: [const Text("Choose a category:"), ...customwidgets]));
   }
 }

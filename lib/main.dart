@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -18,7 +17,7 @@ final GoRouter _router = GoRouter(
         GoRoute(
           path: 'recipe',
           builder: (BuildContext context, GoRouterState state) {
-            return RecipeScreen();
+            return const RecipeScreen();
           },
         ),
       ],
@@ -30,11 +29,10 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   // final snapshot = await _firestore.collection('recipes_collection').get();
   // snapshot.docs.forEach((doc) => print('${doc.id}: ${doc.data()}'));
 
-  runApp(ProviderScope(child: StartApp()));
+  runApp(const ProviderScope(child: StartApp()));
 }
 
 class StartApp extends StatelessWidget {

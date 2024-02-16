@@ -14,7 +14,6 @@ class Recipe {
       this.category = ""});
 
   factory Recipe.fromFirestore(Map<String, dynamic> data, String id) {
-    print("DATA IN RECIPE: $data");
     return Recipe(
       id: id,
       name: data["name"],
