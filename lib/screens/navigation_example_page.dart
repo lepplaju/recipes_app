@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/screens/category_page.dart';
+import 'package:recipe_app/screens/categories_page.dart';
 import 'package:recipe_app/screens/main_page.dart';
 import 'package:recipe_app/screens/new_recipe_page.dart';
 import 'package:recipe_app/screens/recipe_page.dart';
@@ -67,7 +67,9 @@ class _NavigationExampleState extends State<NavigationExample> {
         const RecipeList(),
 
         // Trending page
-        const Padding(padding: EdgeInsets.all(10), child: RecipeWidget()),
+        const Padding(
+            padding: EdgeInsets.all(10),
+            child: Text("todo treding page")), // RecipeWidget()),
 
         // Add new recipe page
         const RecipePageConsumer(),

@@ -1,23 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:recipe_app/providers/user_provider.dart';
+import 'package:recipe_app/screens/category_sceen.dart';
+import 'package:recipe_app/screens/login_screen.dart';
 import 'package:recipe_app/screens/navigation_example_page.dart';
 import 'package:recipe_app/screens/recipe_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 final GoRouter _router = GoRouter(
-  routes: <RouteBase>[
+  routes: [
     GoRoute(
       path: '/',
       builder: (BuildContext context, GoRouterState state) {
         return const NavigationExample();
       },
-      routes: <RouteBase>[
+      routes: [
         GoRoute(
-          path: 'recipe',
+          path: 'recipe/:name',
           builder: (BuildContext context, GoRouterState state) {
-            return const RecipeScreen();
+            return RecipeScreen(name: state.pathParameters['name']!);
+          },
+        ),
+        GoRoute(
+          path: 'category/:category',
+          builder: (BuildContext context, GoRouterState state) {
+            print(state.pathParameters['category']);
+            return CategoryPage(category: state.pathParameters['category']!);
           },
         ),
       ],
@@ -32,14 +42,28 @@ void main() async {
   // final snapshot = await _firestore.collection('recipes_collection').get();
   // snapshot.docs.forEach((doc) => print('${doc.id}: ${doc.data()}'));
 
-  runApp(const ProviderScope(child: StartApp()));
+  runApp(ProviderScope(child: StartApp()));
 }
 
-class StartApp extends StatelessWidget {
-  const StartApp({super.key});
+class StartApp extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
-    //  MaterialApp(title: 'recipeapp', home: NavigationExample());
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(userProvider);
+
+    // return MaterialApp(
+    //     title: 'Recipe with login',
+    //     home: user.when(
+    //       data: (user) {
+    //         return user == null ? LoginScreen() : NavigationExample();
+    //       },
+    //       error: (error, stackTrace) {
+    //         return const Center(child: Text("Something went wrong.."));
+    //       },
+    //       loading: () {
+    //         return const Center(child: Text("Loading..."));
+    //       },
+    //     ));
+
     return MaterialApp.router(
         debugShowCheckedModeBanner: false, routerConfig: _router);
   }

@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:recipe_app/models/mock_data.dart';
+import 'package:recipe_app/providers/category_provider.dart';
 
-class CategoriesPage extends StatelessWidget {
+class CategoriesPage extends ConsumerWidget {
   const CategoriesPage({super.key});
 
   @override
-  build(BuildContext context) {
-    List<String> categories = MockRecipeData().getCategories();
+  build(BuildContext context, WidgetRef ref) {
+    //List<String> categories = MockRecipeData().getCategories();
+
+    final categories = ref.watch(categoryProvider);
 
     List<Widget> customwidgets = categories.map((category) {
       return InkWell(
           onTap: () {
-            print('todo');
+            context.go('/category/${category.toLowerCase()}');
           },
           child: Card(
               margin: const EdgeInsets.all(10),

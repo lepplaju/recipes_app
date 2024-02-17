@@ -15,10 +15,11 @@ class RecipeList extends ConsumerWidget {
       itemBuilder: (context, index) {
         return InkWell(
             onTap: () {
-              context.go('/recipe');
+              context.go('/recipe/${tempRecipes[index].name}');
             },
-            child: Text(
-                'hello $index')); //ListTile(title: Text('${tempRecipes[index].name}')));
+            child: Card(
+                child: Text(
+                    '${tempRecipes[index].name}'))); //ListTile(title: Text('${tempRecipes[index].name}')));
       },
     );
   }
