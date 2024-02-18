@@ -1,8 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:recipe_app/models/mock_data.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:recipe_app/models/recipe.dart';
+import 'package:recipe_app/providers/recipe_provider.dart';
+import 'package:recipe_app/providers/user_provider.dart';
 
-class CustomTopBar extends StatefulWidget implements PreferredSizeWidget {
+class CustomTopBar extends ConsumerStatefulWidget
+    implements PreferredSizeWidget {
   const CustomTopBar({Key? key})
       : preferredSize = const Size.fromHeight(kToolbarHeight),
         super(key: key);
@@ -11,19 +15,36 @@ class CustomTopBar extends StatefulWidget implements PreferredSizeWidget {
   final Size preferredSize; // default is 56.0
 
   @override
-  State<CustomTopBar> createState() => _CustomTopBarState();
+  ConsumerState<CustomTopBar> createState() => _CustomTopBarState();
 }
 
-class _CustomTopBarState extends State<CustomTopBar> {
+class _CustomTopBarState extends ConsumerState<CustomTopBar> {
   final SearchController controller = SearchController();
+
+  logout() async {
+    await FirebaseAuth.instance.signOut();
+  }
 
   @override
   Widget build(BuildContext context) {
-    List<Recipe> tempRecipes = MockRecipeData().getRecipes();
+    final user = ref.watch(userProvider);
+    List<Recipe> tempRecipes = ref.watch(recipeProvider);
     return AppBar(
-        leadingWidth: 100,
+        leadingWidth: 200,
         centerTitle: true,
-        leading: const Center(child: Text('Recipe app!')),
+        leading: user.value != null
+            ? Center(
+                child: Column(children: [
+                const Text('You are logged in!'),
+                ElevatedButton(onPressed: logout, child: const Text('logout'))
+              ]))
+            : ElevatedButton.icon(
+                icon: const Icon(Icons.login),
+                label: const Text('Login anonymously'),
+                onPressed: () async {
+                  await FirebaseAuth.instance.signInAnonymously();
+                },
+              ),
         actions: [
           Column(
             children: <Widget>[

@@ -18,8 +18,8 @@ class RecipeList extends ConsumerWidget {
               context.go('/recipe/${tempRecipes[index].name}');
             },
             child: Card(
-                child: Text(
-                    '${tempRecipes[index].name}'))); //ListTile(title: Text('${tempRecipes[index].name}')));
+                child: Text(tempRecipes[index]
+                    .name))); //ListTile(title: Text('${tempRecipes[index].name}')));
       },
     );
   }

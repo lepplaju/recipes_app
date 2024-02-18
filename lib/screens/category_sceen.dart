@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 class CategoryPage extends StatelessWidget {
-  String category;
-  CategoryPage({required this.category});
+  final String category;
+  const CategoryPage({super.key, required this.category});
 
   @override
   Widget build(BuildContext context) {
@@ -13,22 +13,21 @@ class CategoryPage extends StatelessWidget {
 }
 
 class CategoryScreen extends ConsumerWidget {
-  String category;
+  final String category;
 
-  CategoryScreen({required this.category});
+  const CategoryScreen({super.key, required this.category});
 
   @override
   build(BuildContext context, WidgetRef ref) {
-    print(category);
     return Center(
         child: Padding(
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             child: Column(children: [
               ElevatedButton(
                   onPressed: () {
                     context.go('/');
                   },
-                  child: Text('Go home')),
+                  child: const Text('Go home')),
               Text('Showing recipies with category $category')
             ])));
   }

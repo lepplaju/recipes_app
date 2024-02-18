@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:recipe_app/providers/user_provider.dart';
 import 'package:recipe_app/screens/category_sceen.dart';
-import 'package:recipe_app/screens/login_screen.dart';
 import 'package:recipe_app/screens/navigation_example_page.dart';
 import 'package:recipe_app/screens/recipe_page.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -26,7 +25,6 @@ final GoRouter _router = GoRouter(
         GoRoute(
           path: 'category/:category',
           builder: (BuildContext context, GoRouterState state) {
-            print(state.pathParameters['category']);
             return CategoryPage(category: state.pathParameters['category']!);
           },
         ),
@@ -48,8 +46,6 @@ void main() async {
 class StartApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(userProvider);
-
     // return MaterialApp(
     //     title: 'Recipe with login',
     //     home: user.when(

@@ -114,7 +114,7 @@ class RecipePageConsumer extends ConsumerWidget {
                           ingredientsController.clear();
                           stepsController.clear();
                         } else {
-                          print("invalid");
+                          // TODO: POPUP
                         }
                       },
                       child: const Text("Add recipe")),

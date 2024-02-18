@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 import '../providers/recipe_provider.dart';
 
 class RecipeScreen extends StatelessWidget {
-  String name;
-  RecipeScreen({required this.name});
+  final String name;
+  const RecipeScreen({super.key, required this.name});
 
   @override
   Widget build(BuildContext context) {
@@ -14,19 +14,19 @@ class RecipeScreen extends StatelessWidget {
 }
 
 class RecipeWidget extends ConsumerWidget {
-  String name;
-  RecipeWidget(this.name);
+  final String name;
+  const RecipeWidget(this.name, {super.key});
 
   //final Recipe recipeToShow = MockRecipeData().getRandomRecipe();
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // final recipes = ref.watch(recipeProvider);
     // var recipeToDisplay = recipes[0];
-    var all_recipes = ref.watch(recipeProvider);
-    var recipeToDisplay = all_recipes.firstWhere((r) => r.name == name);
+    var allRecipes = ref.watch(recipeProvider);
+    var recipeToDisplay = allRecipes.firstWhere((r) => r.name == name);
     return Center(
         child: Padding(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: Column(children: [
               ElevatedButton(
                   onPressed: () {
