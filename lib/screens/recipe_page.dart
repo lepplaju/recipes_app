@@ -24,6 +24,11 @@ class RecipeWidget extends ConsumerWidget {
     // var recipeToDisplay = recipes[0];
     var allRecipes = ref.watch(recipeProvider);
     var recipeToDisplay = allRecipes.firstWhere((r) => r.name == name);
+    List<Widget> ingredients = recipeToDisplay.ingredients
+        .map((ingredient) => Text(ingredient))
+        .toList();
+    List<Widget> steps =
+        recipeToDisplay.steps.map((step) => Text(step)).toList();
     return Center(
         child: Padding(
             padding: const EdgeInsets.all(10),
@@ -34,7 +39,22 @@ class RecipeWidget extends ConsumerWidget {
                   },
                   child: const Text('go home')),
               Text("Recipe name: ${recipeToDisplay.name}"),
-              Text("Recipe category: ${recipeToDisplay.category}")
+              Text("Recipe category: ${recipeToDisplay.category}"),
+              Container(
+                  width: 300,
+                  child: Placeholder(
+                    fallbackHeight: 300,
+                  )),
+              Text(
+                "Ingredients:",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              ...ingredients,
+              Text(
+                "Steps:",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              ...steps
             ])));
   }
 }

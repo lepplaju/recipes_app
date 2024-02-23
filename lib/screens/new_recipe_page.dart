@@ -45,7 +45,7 @@ class RecipePageConsumer extends ConsumerWidget {
             child: Container(
                 margin: const EdgeInsets.all(10),
                 child: Column(children: [
-                  const Text('hello world'),
+                  const Text('Add a new recipe'),
                   Row(children: [
                     const Text("Name:"),
                     Expanded(

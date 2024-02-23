@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:recipe_app/models/recipe.dart';
 
 class CategoryNotifier extends StateNotifier<List<String>> {
   CategoryNotifier() : super([]) {

@@ -36,15 +36,16 @@ class _CustomTopBarState extends ConsumerState<CustomTopBar> {
             ? Center(
                 child: Column(children: [
                 const Text('You are logged in!'),
-                ElevatedButton(onPressed: logout, child: const Text('logout'))
+                //ElevatedButton(onPressed: logout, child: const Text('logout'))
               ]))
-            : ElevatedButton.icon(
-                icon: const Icon(Icons.login),
-                label: const Text('Login anonymously'),
-                onPressed: () async {
-                  await FirebaseAuth.instance.signInAnonymously();
-                },
-              ),
+            : Text("not logged in"),
+        // : ElevatedButton.icon(
+        //     icon: const Icon(Icons.login),
+        //     label: const Text('Login anonymously'),
+        //     onPressed: () async {
+        //       await FirebaseAuth.instance.signInAnonymously();
+        //     },
+        //   ),
         actions: [
           Column(
             children: <Widget>[
