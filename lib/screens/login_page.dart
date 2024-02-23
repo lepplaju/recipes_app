@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:recipe_app/providers/user_provider.dart';
+import 'package:recipe_app/widgets/custom_alert.dart';
 
 class LoginPage extends StatefulWidget {
   final String type;
@@ -111,7 +113,6 @@ class _LoginPageState extends State<LoginPage> {
   Future _submit(String emailInput, String passwordInput) async {
     final isValid = formkey.currentState!.validate();
     if (!isValid) {
-      print('not valid');
       showValidationText = AutovalidateMode.always;
       return;
     }
@@ -124,9 +125,6 @@ class _LoginPageState extends State<LoginPage> {
             dialogContext = context;
             return Center(child: CircularProgressIndicator());
           }));
-      print("submit $type");
-      print(emailInput);
-      print(passwordInput);
       try {
         final credentials =
             await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -143,7 +141,17 @@ class _LoginPageState extends State<LoginPage> {
         print(e);
       }
       Navigator.of(context).pop();
+      showDialog(
+          context: context,
+          builder: (context) => CustomAlertDialog(pretext: "Account creation"));
     } else if (type == "login") {
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: ((context) {
+            dialogContext = context;
+            return Center(child: CircularProgressIndicator());
+          }));
       try {
         final credentials = await FirebaseAuth.instance
             .signInWithEmailAndPassword(
@@ -155,6 +163,8 @@ class _LoginPageState extends State<LoginPage> {
           print('Wrong password provided for that user.');
         }
       }
+      Navigator.of(context).pop();
+      showDialog(context: context, builder: (context) => CustomAlertDialog());
     }
   }
 }
