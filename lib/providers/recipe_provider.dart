@@ -36,6 +36,7 @@ class RecipeNotifier extends StateNotifier<List<Recipe>> {
     // state = [...state, note];
 
     final recipeData = Recipe(
+      userId: recipeToAdd.userId,
       id: recipeToAdd.id,
       name: recipeToAdd.name,
       category: recipeToAdd.category,

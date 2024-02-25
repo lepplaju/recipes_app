@@ -7,13 +7,12 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Recipe trendingRecipe = MockRecipeData().getRandomRecipe();
     return Center(
         child: Column(children: [
       const Text('Welcome!'),
       const Text('Today\'s Trending Recipe:'),
       Card(
-        child: Text(trendingRecipe.name),
+        child: Text("TODO TRENDING"),
       )
     ]));
   }
