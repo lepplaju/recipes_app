@@ -7,6 +7,7 @@ import 'package:recipe_app/providers/user_provider.dart';
 import 'package:recipe_app/screens/category_sceen.dart';
 import 'package:recipe_app/screens/login_page.dart';
 import 'package:recipe_app/screens/navigation_example_page.dart';
+import 'package:recipe_app/screens/new_recipe_choose_category.dart';
 import 'package:recipe_app/screens/new_recipe_page.dart';
 import 'package:recipe_app/screens/recipe_page.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -42,6 +43,12 @@ final GoRouter _router = GoRouter(
           path: 'newRecipe',
           builder: (BuildContext context, GoRouterState state) {
             return RecipePageSW();
+          },
+        ),
+        GoRoute(
+          path: 'temp',
+          builder: (BuildContext context, GoRouterState state) {
+            return NewRecipeCategoryPage();
           },
         ),
       ],

@@ -31,16 +31,46 @@ class RecipePageState extends ConsumerState<RecipePageSW> {
 
   var selectedCategory;
   static const Color hintTextColor = Color(0xFF717571);
+  final categoryController = TextEditingController();
+  final ingredientsController = TextEditingController();
+  final stepsController = TextEditingController();
+  final nameController = TextEditingController();
+  final List<Widget> ingredientFieds = [
+    Container(
+      margin: EdgeInsets.symmetric(vertical: 5),
+      child: TextField(
+        controller: TextEditingController(),
+        decoration: const InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: 'Ingredient',
+            labelStyle: TextStyle(color: hintTextColor)),
+      ),
+    ),
+  ];
+  var stepIndex = 1;
+  final List<Widget> stepFieds = [
+    Container(
+      margin: EdgeInsets.symmetric(vertical: 5),
+      child: TextField(
+        controller: TextEditingController(),
+        decoration: const InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: '1. step',
+            labelStyle: TextStyle(color: hintTextColor)),
+      ),
+    ),
+  ];
 
   @override
   build(BuildContext context) {
-    final categoryController = TextEditingController();
-    final ingredientsController = TextEditingController();
-    final stepsController = TextEditingController();
-    final nameController = TextEditingController();
     final user = ref.watch(userProvider);
     final categories = ref.watch(categoryProvider);
-
+    // var dropownMenuItems = [
+    //   DropdownMenuEntry<String>(
+    //     value: "value",
+    //     label: "value",
+    //   )
+    // ];
     var dropownMenuItems = categories.map((value) => DropdownMenuEntry<String>(
           value: value,
           label: value,
@@ -61,88 +91,174 @@ class RecipePageState extends ConsumerState<RecipePageSW> {
     }
 
     return Scaffold(
-        body: Container(
-            margin: const EdgeInsets.all(20),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const Text('Add a new recipe'),
-                  Container(
-                    margin: const EdgeInsets.all(20),
-                    child: TextField(
-                        controller: nameController,
-                        decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Name',
-                            labelStyle: TextStyle(color: hintTextColor))),
-                  ),
-                  Container(
-                      margin: const EdgeInsets.only(
-                          top: 10, left: 20, right: 20, bottom: 20),
-                      child: Column(children: [
-                        DropdownMenu(
-                          initialSelection: categories.first,
-                          controller: categoryController,
-                          label: Text("Category:"),
-                          expandedInsets: EdgeInsets.zero,
-                          dropdownMenuEntries: dropownMenuItems.toList(),
-                          onSelected: (String? value) {
-                            setState(() {
-                              selectedCategory = value!;
-                            });
+        body: SingleChildScrollView(
+            child: Container(
+                margin: const EdgeInsets.all(20),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const Text('Add a new recipe'),
+                      Container(
+                        margin: const EdgeInsets.all(20),
+                        child: TextField(
+                            controller: nameController,
+                            decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'Name',
+                                labelStyle: TextStyle(color: hintTextColor))),
+                      ),
+                      Container(
+                          margin: const EdgeInsets.only(
+                              top: 10, left: 20, right: 20, bottom: 20),
+                          child: Column(children: [
+                            DropdownMenu(
+                              controller: categoryController,
+                              label: Text("Category:"),
+                              expandedInsets: EdgeInsets.zero,
+                              dropdownMenuEntries: dropownMenuItems.toList(),
+                              onSelected: (String? value) {
+                                setState(() {
+                                  selectedCategory = value!;
+                                });
+                              },
+                            ),
+                          ])),
+                      Container(
+                          margin: const EdgeInsets.all(20),
+                          child: Column(children: [
+                            ...ingredientFieds,
+                            ElevatedButton.icon(
+                                icon: Icon(Icons.add),
+                                onPressed: () {
+                                  setState(() {
+                                    ingredientFieds.add(
+                                      Container(
+                                        margin:
+                                            EdgeInsets.symmetric(vertical: 5),
+                                        child: TextField(
+                                          controller: TextEditingController(),
+                                          decoration: const InputDecoration(
+                                              border: OutlineInputBorder(),
+                                              labelText: 'Ingredient',
+                                              labelStyle: TextStyle(
+                                                  color: hintTextColor)),
+                                        ),
+                                      ),
+                                    );
+                                  });
+                                },
+                                label: Text("new ingredient"))
+                          ])),
+                      Container(
+                          margin: const EdgeInsets.all(20),
+                          child: Column(children: [
+                            ...stepFieds,
+                            ElevatedButton.icon(
+                                icon: Icon(Icons.add),
+                                onPressed: () {
+                                  setState(() {
+                                    stepIndex += 1;
+                                    stepFieds.add(
+                                      Container(
+                                          margin:
+                                              EdgeInsets.symmetric(vertical: 5),
+                                          child: Row(children: [
+                                            Expanded(
+                                                child: TextField(
+                                              controller:
+                                                  TextEditingController(),
+                                              decoration: InputDecoration(
+                                                  border: OutlineInputBorder(),
+                                                  labelText: '$stepIndex. step',
+                                                  labelStyle: TextStyle(
+                                                      color: hintTextColor)),
+                                            )),
+                                            Container(
+                                                child:
+                                                    Icon(Icons.delete_forever)),
+                                          ])),
+                                    );
+                                  });
+                                },
+                                label: Text("new step"))
+                          ])),
+                      SizedBox(
+                        height: 100,
+                      ),
+                      ElevatedButton.icon(
+                          icon: Icon(Icons.check),
+                          onPressed: () {
+                            print(selectedCategory);
+                            if (nameController.text.isNotEmpty &
+                                ingredientsController.text.isNotEmpty &
+                                stepsController.text.isNotEmpty) {
+                              addRecipe(
+                                  nameController.text.toString(),
+                                  selectedCategory.toString(),
+                                  ingredientsController.text.toString(),
+                                  stepsController.text.toString());
+                              nameController.clear();
+                              categoryController.clear();
+                              ingredientsController.clear();
+                              stepsController.clear();
+                            } else {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => CustomAlertDialog(
+                                      pretext: "Adding failed"));
+                            }
                           },
-                        ),
-                      ])),
-                  Container(
-                      margin: const EdgeInsets.all(20),
-                      child: TextField(
-                        controller: ingredientsController,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Ingredients',
-                        ),
-                      )),
-                  Container(
-                      margin: const EdgeInsets.all(20),
-                      child: TextField(
-                        controller: stepsController,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Steps',
-                        ),
-                      )),
-                  ElevatedButton(
-                      onPressed: () {
-                        print(selectedCategory);
-                        if (nameController.text.isNotEmpty &
-                            ingredientsController.text.isNotEmpty &
-                            stepsController.text.isNotEmpty) {
-                          addRecipe(
-                              nameController.text.toString(),
-                              selectedCategory.toString(),
-                              ingredientsController.text.toString(),
-                              stepsController.text.toString());
-                          nameController.clear();
-                          categoryController.clear();
-                          ingredientsController.clear();
-                          stepsController.clear();
-                        } else {
-                          showDialog(
-                              context: context,
-                              builder: (context) =>
-                                  CustomAlertDialog(pretext: "Adding failed"));
-                        }
-                      },
-                      child: const Text("Add recipe")),
-                  SizedBox(
-                    height: 150,
-                  ),
-                  ElevatedButton(
-                      onPressed: () {
-                        context.go("/");
-                      },
-                      child: Text("Go home")),
-                ])));
+                          label: const Text("Add new recipe")),
+                      SizedBox(
+                        height: 150,
+                      ),
+                      ElevatedButton(
+                          onPressed: () {
+                            context.go("/");
+                          },
+                          child: Text("Go home")),
+                    ]))));
   }
 }
+
+
+/*
+FutureBuilder<List<Widget>>(
+                                future: ingredientFieds,
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<List<Widget>> snapshot) {
+                                  List<Widget> children;
+                                  if (snapshot.hasData) {
+                                    children = <Widget>[
+                                      Column(children: [...snapshot.data!]),
+                                    ];
+                                  } else if (snapshot.hasError) {
+                                    children = <Widget>[
+                                      const Icon(
+                                        Icons.error_outline,
+                                        color: Colors.red,
+                                        size: 60,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 16),
+                                        child: Text('Error: ${snapshot.error}'),
+                                      ),
+                                    ];
+                                  } else {
+                                    children = const <Widget>[
+                                      Padding(
+                                        padding: EdgeInsets.only(top: 16),
+                                        child: Text('Loading categories...'),
+                                      ),
+                                    ];
+                                  }
+                                  return Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: children,
+                                    ),
+                                  );
+                                }),
+*/
