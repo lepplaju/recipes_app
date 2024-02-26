@@ -71,10 +71,11 @@ class RecipePageState extends ConsumerState<RecipePageSW> {
     //     label: "value",
     //   )
     // ];
-    var dropownMenuItems = categories.map((value) => DropdownMenuEntry<String>(
-          value: value,
-          label: value,
-        ));
+    var dropownMenuItems =
+        categories.map((category) => DropdownMenuEntry<String>(
+              value: category.name,
+              label: category.name,
+            ));
 
     addRecipe(String name, String category, String ingredients, String steps) {
       var userId = ref.watch(userProvider).value!.uid;

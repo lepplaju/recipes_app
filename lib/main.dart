@@ -1,9 +1,6 @@
-// ignore_for_file: unused_import
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:recipe_app/providers/user_provider.dart';
 import 'package:recipe_app/screens/category_sceen.dart';
 import 'package:recipe_app/screens/login_page.dart';
 import 'package:recipe_app/screens/navigation_example_page.dart';

@@ -15,12 +15,13 @@ class CategoriesPage extends ConsumerWidget {
     List<Widget> customwidgets = categories.map((category) {
       return InkWell(
           onTap: () {
-            context.go('/category/${category.toLowerCase()}');
+            context.go('/category/${category.name.toLowerCase()}');
           },
           child: Card(
               margin: const EdgeInsets.all(10),
               child: Padding(
-                  padding: const EdgeInsets.all(15), child: Text(category))));
+                  padding: const EdgeInsets.all(15),
+                  child: Text(category.name))));
     }).toList();
     return Center(
         child: ListView(
