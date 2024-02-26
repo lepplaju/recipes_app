@@ -20,8 +20,7 @@ class CategoryNotifier extends StateNotifier<List<RecipeCategory>> {
   void addCategory(String category) async {
     var categoryData =
         RecipeCategory(name: category, userId: "none").toFirestore();
-    final categoryRef =
-        await _firestore.collection('categories').add(categoryData);
+    await _firestore.collection('categories').add(categoryData);
     final addedCategory = RecipeCategory.fromFirestore(categoryData);
     state = [...state, addedCategory];
   }

@@ -39,13 +39,13 @@ final GoRouter _router = GoRouter(
         GoRoute(
           path: 'newRecipe',
           builder: (BuildContext context, GoRouterState state) {
-            return RecipePageSW();
+            return const RecipePageSW();
           },
         ),
         GoRoute(
           path: 'temp',
           builder: (BuildContext context, GoRouterState state) {
-            return NewRecipeCategoryPage();
+            return const NewRecipeCategoryPage();
           },
         ),
       ],

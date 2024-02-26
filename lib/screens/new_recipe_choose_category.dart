@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:recipe_app/providers/category_provider.dart';
-import 'package:recipe_app/providers/user_provider.dart';
 
 class NewRecipeCategoryPage extends ConsumerStatefulWidget {
+  const NewRecipeCategoryPage({super.key});
+
   @override
   NewRecipeCategoryPageState createState() => NewRecipeCategoryPageState();
 }
@@ -15,7 +16,7 @@ class NewRecipeCategoryPageState extends ConsumerState<NewRecipeCategoryPage> {
   @override
   Widget build(BuildContext context) {
     var selectedText = "";
-    var user = ref.watch(userProvider);
+    //var user = ref.watch(userProvider);
     var categories = ref.watch(categoryProvider);
     List<DropdownMenuEntry<String>> dropDownItems = categories
         .where((category) => !chosenCategories.contains(category.name))
@@ -27,20 +28,21 @@ class NewRecipeCategoryPageState extends ConsumerState<NewRecipeCategoryPage> {
         body: SingleChildScrollView(
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-      Text("Choose the categories for the recipe"),
+      const Text("Choose the categories for the recipe"),
       Container(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           child: Row(children: [
             Expanded(
                 child: Container(
-                    margin: EdgeInsets.all(10),
+                    margin: const EdgeInsets.all(10),
                     child: DropdownMenu(
                       onSelected: (value) => selectedText = value!,
-                      leadingIcon: Icon(Icons.search),
+                      leadingIcon: const Icon(Icons.search),
                       dropdownMenuEntries: dropDownItems,
                       expandedInsets: EdgeInsets.zero,
                     ))),
             Container(
+                padding: const EdgeInsets.all(1),
                 child: ElevatedButton.icon(
                     onPressed: () {
                       setState(() {
@@ -50,15 +52,16 @@ class NewRecipeCategoryPageState extends ConsumerState<NewRecipeCategoryPage> {
                         }
                       });
                     },
-                    icon: Icon(Icons.add),
-                    label: Text("add")))
+                    icon: const Icon(Icons.add),
+                    label: const Text("add")))
           ])),
       Container(
-        margin: EdgeInsets.only(top: 50),
+        margin: const EdgeInsets.only(top: 50),
         child: ElevatedButton.icon(
-          label:
-              !showingTextField ? Text("Create a new category") : Text("Close"),
-          icon: Icon(Icons.add),
+          label: !showingTextField
+              ? const Text("Create a new category")
+              : const Text("Close"),
+          icon: const Icon(Icons.add),
           onPressed: () {
             setState(() {
               showingTextField = !showingTextField;
@@ -67,38 +70,39 @@ class NewRecipeCategoryPageState extends ConsumerState<NewRecipeCategoryPage> {
         ),
       ),
       showingTextField == false
-          ? SizedBox(
+          ? const SizedBox(
               width: 0,
             )
           : Row(children: [
               Expanded(
                   child: Container(
-                      margin: EdgeInsets.all(10),
+                      margin: const EdgeInsets.all(10),
                       child: TextField(
                         controller: newCategoryController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: OutlineInputBorder(),
                           hintText: 'Name the new category',
                         ),
                       ))),
               Container(
+                  padding: const EdgeInsets.all(1),
                   child: ElevatedButton.icon(
                       onPressed: () {
-                        print(newCategoryController.text);
+                        //print(newCategoryController.text);
                       },
-                      icon: Icon(Icons.add),
-                      label: Text("Create")))
+                      icon: const Icon(Icons.add),
+                      label: const Text("Create")))
             ]),
       Container(
-        margin: EdgeInsets.all(50),
+        margin: const EdgeInsets.all(50),
         child: SizedBox(
             height: 100,
             width: 200,
             child: ListView(
                 shrinkWrap: true,
                 children: chosenCategories
-                    .map((e) =>
-                        Row(children: [Text(e), Icon(Icons.delete_forever)]))
+                    .map((e) => Row(
+                        children: [Text(e), const Icon(Icons.delete_forever)]))
                     .toList())),
       )
     ])));

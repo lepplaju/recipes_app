@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -19,7 +18,7 @@ class LoginScreen extends StatelessWidget {
                 context.go('/login/create');
               },
             ),
-            Padding(
+            const Padding(
               padding: EdgeInsets.all(15),
             ),
             ElevatedButton.icon(

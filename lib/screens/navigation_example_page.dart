@@ -46,7 +46,7 @@ class _NavigationExampleState extends ConsumerState<NavigationExample> {
         label: 'Recipes',
       ),
       NavigationDestination(
-          icon: Icon(Icons.manage_accounts_outlined), label: accountText)
+          icon: const Icon(Icons.manage_accounts_outlined), label: accountText)
       // const NavigationDestination(
       //   icon: Icon(
       //     Icons.add_box_rounded,
@@ -107,7 +107,7 @@ class _NavigationExampleState extends ConsumerState<NavigationExample> {
         const RecipeList(),
 
         // Add new recipe page
-        user.value == null ? const LoginScreen() : AccountPage(),
+        user.value == null ? const LoginScreen() : const AccountPage(),
       ][currentPageIndex],
     );
   }

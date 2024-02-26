@@ -3,8 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:recipe_app/providers/user_provider.dart';
 
 class CustomAlertDialog extends ConsumerWidget {
-  String pretext;
-  CustomAlertDialog({this.pretext = "sign in"});
+  final String pretext;
+
+  const CustomAlertDialog({this.pretext = "sign in"});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var user = ref.watch(userProvider);
@@ -14,7 +15,7 @@ class CustomAlertDialog extends ConsumerWidget {
       title: Text(textToDisplay),
       actions: [
         TextButton(
-          child: Text("ok"),
+          child: const Text("ok"),
           onPressed: () {
             Navigator.of(context).pop();
           },

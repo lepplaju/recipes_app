@@ -5,6 +5,8 @@ import 'package:recipe_app/providers/recipe_provider.dart';
 import 'package:recipe_app/providers/user_provider.dart';
 
 class AccountPage extends ConsumerWidget {
+  const AccountPage({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var user = ref.watch(userProvider);
@@ -20,18 +22,18 @@ class AccountPage extends ConsumerWidget {
     return Center(
         child: Column(children: [
       ElevatedButton(
-        child: Text("add recipe"),
+        child: const Text("add recipe"),
         onPressed: () {
           context.go("/newRecipe");
         },
       ),
-      Text("your recipes:"),
+      const Text("your recipes:"),
       yourRecipes.isEmpty
-          ? SizedBox(height: 100)
+          ? const SizedBox(height: 100)
           : Column(
               children: [...recipeCards],
             ),
-      Text("your favorites:")
+      const Text("your favorites:")
     ]));
   }
 }

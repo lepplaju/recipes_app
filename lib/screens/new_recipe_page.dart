@@ -19,6 +19,8 @@ import 'package:recipe_app/widgets/custom_alert.dart';
 // }
 
 class RecipePageSW extends ConsumerStatefulWidget {
+  const RecipePageSW({super.key});
+
   @override
   RecipePageState createState() => RecipePageState();
 }
@@ -29,7 +31,7 @@ class RecipePageState extends ConsumerState<RecipePageSW> {
     return now.microsecondsSinceEpoch.toString();
   }
 
-  var selectedCategory;
+  late String selectedCategory;
   static const Color hintTextColor = Color(0xFF717571);
   final categoryController = TextEditingController();
   final ingredientsController = TextEditingController();
@@ -37,7 +39,7 @@ class RecipePageState extends ConsumerState<RecipePageSW> {
   final nameController = TextEditingController();
   final List<Widget> ingredientFieds = [
     Container(
-      margin: EdgeInsets.symmetric(vertical: 5),
+      margin: const EdgeInsets.symmetric(vertical: 5),
       child: TextField(
         controller: TextEditingController(),
         decoration: const InputDecoration(
@@ -50,7 +52,7 @@ class RecipePageState extends ConsumerState<RecipePageSW> {
   var stepIndex = 1;
   final List<Widget> stepFieds = [
     Container(
-      margin: EdgeInsets.symmetric(vertical: 5),
+      margin: const EdgeInsets.symmetric(vertical: 5),
       child: TextField(
         controller: TextEditingController(),
         decoration: const InputDecoration(
@@ -63,7 +65,7 @@ class RecipePageState extends ConsumerState<RecipePageSW> {
 
   @override
   build(BuildContext context) {
-    final user = ref.watch(userProvider);
+    //final user = ref.watch(userProvider);
     final categories = ref.watch(categoryProvider);
     // var dropownMenuItems = [
     //   DropdownMenuEntry<String>(
@@ -79,7 +81,6 @@ class RecipePageState extends ConsumerState<RecipePageSW> {
 
     addRecipe(String name, String category, String ingredients, String steps) {
       var userId = ref.watch(userProvider).value!.uid;
-      print(userId);
       var mockId = idGenerator();
       var newRecipe = Recipe(
           userId: userId,
@@ -115,7 +116,7 @@ class RecipePageState extends ConsumerState<RecipePageSW> {
                           child: Column(children: [
                             DropdownMenu(
                               controller: categoryController,
-                              label: Text("Category:"),
+                              label: const Text("Category:"),
                               expandedInsets: EdgeInsets.zero,
                               dropdownMenuEntries: dropownMenuItems.toList(),
                               onSelected: (String? value) {
@@ -130,13 +131,13 @@ class RecipePageState extends ConsumerState<RecipePageSW> {
                           child: Column(children: [
                             ...ingredientFieds,
                             ElevatedButton.icon(
-                                icon: Icon(Icons.add),
+                                icon: const Icon(Icons.add),
                                 onPressed: () {
                                   setState(() {
                                     ingredientFieds.add(
                                       Container(
-                                        margin:
-                                            EdgeInsets.symmetric(vertical: 5),
+                                        margin: const EdgeInsets.symmetric(
+                                            vertical: 5),
                                         child: TextField(
                                           controller: TextEditingController(),
                                           decoration: const InputDecoration(
@@ -149,48 +150,50 @@ class RecipePageState extends ConsumerState<RecipePageSW> {
                                     );
                                   });
                                 },
-                                label: Text("new ingredient"))
+                                label: const Text("new ingredient"))
                           ])),
                       Container(
                           margin: const EdgeInsets.all(20),
                           child: Column(children: [
                             ...stepFieds,
                             ElevatedButton.icon(
-                                icon: Icon(Icons.add),
+                                icon: const Icon(Icons.add),
                                 onPressed: () {
                                   setState(() {
                                     stepIndex += 1;
                                     stepFieds.add(
                                       Container(
-                                          margin:
-                                              EdgeInsets.symmetric(vertical: 5),
+                                          margin: const EdgeInsets.symmetric(
+                                              vertical: 5),
                                           child: Row(children: [
                                             Expanded(
                                                 child: TextField(
                                               controller:
                                                   TextEditingController(),
                                               decoration: InputDecoration(
-                                                  border: OutlineInputBorder(),
+                                                  border:
+                                                      const OutlineInputBorder(),
                                                   labelText: '$stepIndex. step',
-                                                  labelStyle: TextStyle(
+                                                  labelStyle: const TextStyle(
                                                       color: hintTextColor)),
                                             )),
                                             Container(
-                                                child:
-                                                    Icon(Icons.delete_forever)),
+                                                padding:
+                                                    const EdgeInsets.all(1),
+                                                child: const Icon(
+                                                    Icons.delete_forever)),
                                           ])),
                                     );
                                   });
                                 },
-                                label: Text("new step"))
+                                label: const Text("new step"))
                           ])),
-                      SizedBox(
+                      const SizedBox(
                         height: 100,
                       ),
                       ElevatedButton.icon(
-                          icon: Icon(Icons.check),
+                          icon: const Icon(Icons.check),
                           onPressed: () {
-                            print(selectedCategory);
                             if (nameController.text.isNotEmpty &
                                 ingredientsController.text.isNotEmpty &
                                 stepsController.text.isNotEmpty) {
@@ -211,14 +214,14 @@ class RecipePageState extends ConsumerState<RecipePageSW> {
                             }
                           },
                           label: const Text("Add new recipe")),
-                      SizedBox(
+                      const SizedBox(
                         height: 150,
                       ),
                       ElevatedButton(
                           onPressed: () {
                             context.go("/");
                           },
-                          child: Text("Go home")),
+                          child: const Text("Go home")),
                     ]))));
   }
 }
