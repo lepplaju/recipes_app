@@ -21,8 +21,8 @@ class CategoryScreen extends ConsumerWidget {
   @override
   build(BuildContext context, WidgetRef ref) {
     var allRecipes = ref.watch(recipeProvider);
-    var recipesWithCorrectCategory = allRecipes.where(
-        (recipe) => recipe.category.toLowerCase() == category.toLowerCase());
+    var recipesWithCorrectCategory = allRecipes
+        .where((recipe) => recipe.categories.contains(category.toLowerCase()));
     List<Widget> recipeCards = recipesWithCorrectCategory
         .map((recipe) => Card(child: Text(recipe.name)))
         .toList();

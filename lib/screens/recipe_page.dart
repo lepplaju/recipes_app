@@ -39,7 +39,7 @@ class RecipeWidget extends ConsumerWidget {
                   },
                   child: const Text('go home')),
               Text("Recipe name: ${recipeToDisplay.name}"),
-              Text("Recipe category: ${recipeToDisplay.category}"),
+              Text("Recipe categories: ${recipeToDisplay.categories}"),
               const SizedBox(
                   width: 300,
                   child: Placeholder(

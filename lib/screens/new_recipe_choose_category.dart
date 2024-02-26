@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:recipe_app/models/category.dart';
 import 'package:recipe_app/providers/category_provider.dart';
 
 class NewRecipeCategoryPage extends ConsumerStatefulWidget {
@@ -88,11 +89,30 @@ class NewRecipeCategoryPageState extends ConsumerState<NewRecipeCategoryPage> {
                   padding: const EdgeInsets.all(1),
                   child: ElevatedButton.icon(
                       onPressed: () {
-                        //print(newCategoryController.text);
+                        var name = newCategoryController.text;
+                        var newCategory = RecipeCategory(name: name);
+                        if (ref.watch(categoryProvider).any((category) =>
+                            category.name.toLowerCase() ==
+                            newCategory.name.toLowerCase())) {
+                          //print("category already exists!");
+                          return;
+                        } else {
+                          ref
+                              .watch(categoryProvider.notifier)
+                              .addCategory(newCategory);
+                          newCategoryController.clear();
+                        }
                       },
                       icon: const Icon(Icons.add),
                       label: const Text("Create")))
             ]),
+      Container(
+          margin: const EdgeInsets.all(10),
+          child: ElevatedButton(
+              onPressed: () {
+                //ref.watch(recipeProvider.notifier).updateAllRecipes();
+              },
+              child: const Text("Update data structure"))),
       Container(
         margin: const EdgeInsets.all(50),
         child: SizedBox(

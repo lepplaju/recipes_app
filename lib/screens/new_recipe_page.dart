@@ -82,11 +82,11 @@ class RecipePageState extends ConsumerState<RecipePageSW> {
     addRecipe(String name, String category, String ingredients, String steps) {
       var userId = ref.watch(userProvider).value!.uid;
       var mockId = idGenerator();
-      var newRecipe = Recipe(
+      var newRecipe = NewRecipe(
           userId: userId,
           id: mockId,
           name: name,
-          category: category,
+          categories: [category],
           ingredients: [ingredients],
           steps: [steps]);
       ref.watch(recipeProvider.notifier).addRecipe(newRecipe);
@@ -209,7 +209,7 @@ class RecipePageState extends ConsumerState<RecipePageSW> {
                             } else {
                               showDialog(
                                   context: context,
-                                  builder: (context) => CustomAlertDialog(
+                                  builder: (context) => const CustomAlertDialog(
                                       pretext: "Adding failed"));
                             }
                           },

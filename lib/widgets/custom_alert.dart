@@ -5,7 +5,7 @@ import 'package:recipe_app/providers/user_provider.dart';
 class CustomAlertDialog extends ConsumerWidget {
   final String pretext;
 
-  const CustomAlertDialog({this.pretext = "sign in"});
+  const CustomAlertDialog({super.key, this.pretext = "sign in"});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var user = ref.watch(userProvider);

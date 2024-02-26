@@ -15,7 +15,7 @@ class RecipeList extends ConsumerWidget {
       itemCount: tempRecipes.length,
       itemBuilder: (context, index) {
         return Padding(
-            padding: EdgeInsets.only(left: 100, right: 100, top: 20),
+            padding: const EdgeInsets.only(left: 100, right: 100, top: 20),
             child: Card(
                 child: InkWell(
                     onTap: () {
@@ -26,8 +26,8 @@ class RecipeList extends ConsumerWidget {
                         children: [
                           Text(tempRecipes[index].name),
                           Container(
-                              padding: EdgeInsets.all(10),
-                              child: Placeholder(
+                              padding: const EdgeInsets.all(10),
+                              child: const Placeholder(
                                 fallbackHeight: 100,
                                 fallbackWidth: 100,
                               ))

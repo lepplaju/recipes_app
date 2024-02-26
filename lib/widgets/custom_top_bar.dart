@@ -28,17 +28,17 @@ class _CustomTopBarState extends ConsumerState<CustomTopBar> {
   @override
   Widget build(BuildContext context) {
     final user = ref.watch(userProvider);
-    List<Recipe> tempRecipes = ref.watch(recipeProvider);
+    List<NewRecipe> tempRecipes = ref.watch(recipeProvider);
     return AppBar(
         leadingWidth: 200,
         centerTitle: true,
         leading: user.value != null
-            ? Center(
+            ? const Center(
                 child: Column(children: [
-                const Text('You are logged in!'),
+                Text('You are logged in!'),
                 //ElevatedButton(onPressed: logout, child: const Text('logout'))
               ]))
-            : Text("not logged in"),
+            : const Text("not logged in"),
         // : ElevatedButton.icon(
         //     icon: const Icon(Icons.login),
         //     label: const Text('Login anonymously'),
