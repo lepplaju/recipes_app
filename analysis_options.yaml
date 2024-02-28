@@ -1,1 +1,10 @@
 include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  plugins:
+    - custom_lint
+
+# REMOVE THIS LATER
+linter:
+  rules:
+    avoid_print: false

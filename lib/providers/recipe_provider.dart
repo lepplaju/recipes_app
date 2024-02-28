@@ -13,10 +13,6 @@ class RecipeNotifier extends StateNotifier<List<NewRecipe>> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   void _fetchRecipes() async {
-    // if (userId == '') {
-    //   return;
-    // }
-    // .where('userId', isEqualTo: userId)
     final snapshot = await _firestore.collection('recipes_collection').get();
     final recipes = snapshot.docs.map((doc) {
       return NewRecipe.fromFirestore(doc.data(), doc.id);
@@ -53,6 +49,12 @@ class RecipeNotifier extends StateNotifier<List<NewRecipe>> {
   void deleteRecipe(String id) async {
     await _firestore.collection('recipes_collection').doc(id).delete();
     state = state.where((recipe) => recipe.id != id).toList();
+  }
+
+  Future<NewRecipe?> getRecipeById(String id) async {
+    var firestoreRecipe =
+        await _firestore.collection("recipes_collection").doc(id).get();
+    return NewRecipe.fromFirestore(firestoreRecipe.data()!, firestoreRecipe.id);
   }
 
 // Temporary function used to modify the data structure in firebase

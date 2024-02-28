@@ -19,7 +19,7 @@ class RecipeList extends ConsumerWidget {
             child: Card(
                 child: InkWell(
                     onTap: () {
-                      context.go('/recipe/${tempRecipes[index].name}');
+                      context.go('/recipe/${tempRecipes[index].id}');
                     },
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
