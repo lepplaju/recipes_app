@@ -3,16 +3,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:recipe_app/providers/user_provider.dart';
 
 class CustomAlertDialog extends ConsumerWidget {
-  final String pretext;
+  final String title;
+  final String subtitle;
 
-  const CustomAlertDialog({super.key, this.pretext = "sign in"});
+  CustomAlertDialog({super.key, required this.title, this.subtitle = ""});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var user = ref.watch(userProvider);
-    var textToDisplay =
-        user.value != null ? "$pretext succesful!" : "$pretext failed!";
     return AlertDialog(
-      title: Text(textToDisplay),
+      title: Text(title),
+      content: subtitle.length > 0 ? Text(subtitle) : null,
       actions: [
         TextButton(
           child: const Text("ok"),

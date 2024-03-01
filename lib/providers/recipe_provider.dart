@@ -52,9 +52,48 @@ class RecipeNotifier extends StateNotifier<List<NewRecipe>> {
   }
 
   Future<NewRecipe?> getRecipeById(String id) async {
+    print(id);
     var firestoreRecipe =
         await _firestore.collection("recipes_collection").doc(id).get();
     return NewRecipe.fromFirestore(firestoreRecipe.data()!, firestoreRecipe.id);
+  }
+
+  Future<NewRecipe?> fetchRandomTrending({String? previousId}) async {
+    var randomkey = _firestore.collection("recipes_collection").doc().id;
+    final recipeRef = _firestore.collection("recipes_collection");
+    var query = recipeRef.where("id", isGreaterThan: previousId).limit(1);
+    if (previousId != null) {
+      query = recipeRef
+          .where("id", isGreaterThan: randomkey)
+          .where("id", isNotEqualTo: previousId)
+          .limit(1);
+    }
+
+    var recipeSnapshot = await query.get();
+    if (recipeSnapshot.docs.isNotEmpty) {
+      var recipeData = recipeSnapshot.docs.first.data();
+      return NewRecipe.fromFirestore(recipeData, recipeSnapshot.docs.first.id);
+    } else {
+      var secondRecipeSnapshot = await _firestore
+          .collection("recipe_collection")
+          .where("id", isGreaterThanOrEqualTo: randomkey)
+          .where("id", isNotEqualTo: previousId)
+          .orderBy("id")
+          .limit(1)
+          .get();
+      if (secondRecipeSnapshot.docs.isNotEmpty) {
+        var recipeData = recipeSnapshot.docs.first.data();
+        return NewRecipe.fromFirestore(
+            recipeData, recipeSnapshot.docs.first.id);
+      } else {
+        print("both empty!!!");
+      }
+      return null;
+    }
+
+    // if (recipeRef == null){
+    // recipeRef = _firestore.collection("recipe_collection").where("id", isLessThanOrEqualTo: key).orderBy("id").limit(1);
+    // }
   }
 
 // Temporary function used to modify the data structure in firebase

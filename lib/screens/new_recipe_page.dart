@@ -34,10 +34,11 @@ class RecipePageState extends ConsumerState<RecipePageSW> {
   late String selectedCategory;
   static const Color hintTextColor = Color(0xFF717571);
   final categoryController = TextEditingController();
-  final ingredientsController = TextEditingController();
+  final initialIngredientController = TextEditingController();
   final stepsController = TextEditingController();
   final nameController = TextEditingController();
-  final List<Widget> ingredientFieds = [
+
+  final List<Widget> ingredientTextfieldWidgets = [
     Container(
       margin: const EdgeInsets.symmetric(vertical: 5),
       child: TextField(
@@ -67,6 +68,7 @@ class RecipePageState extends ConsumerState<RecipePageSW> {
   build(BuildContext context) {
     //final user = ref.watch(userProvider);
     final categories = ref.watch(categoryProvider);
+    List<TextEditingController> ingredientTextfieldControllers = [];
     // var dropownMenuItems = [
     //   DropdownMenuEntry<String>(
     //     value: "value",
@@ -129,12 +131,16 @@ class RecipePageState extends ConsumerState<RecipePageSW> {
                       Container(
                           margin: const EdgeInsets.all(20),
                           child: Column(children: [
-                            ...ingredientFieds,
+                            ...ingredientTextfieldWidgets,
                             ElevatedButton.icon(
                                 icon: const Icon(Icons.add),
                                 onPressed: () {
+                                  var dynamicTextFieldController =
+                                      TextEditingController();
                                   setState(() {
-                                    ingredientFieds.add(
+                                    ingredientTextfieldControllers
+                                        .add(dynamicTextFieldController);
+                                    ingredientTextfieldWidgets.add(
                                       Container(
                                         margin: const EdgeInsets.symmetric(
                                             vertical: 5),
@@ -194,23 +200,28 @@ class RecipePageState extends ConsumerState<RecipePageSW> {
                       ElevatedButton.icon(
                           icon: const Icon(Icons.check),
                           onPressed: () {
+                            for (var item in ingredientTextfieldControllers) {
+                              print(item.text);
+                            }
                             if (nameController.text.isNotEmpty &
-                                ingredientsController.text.isNotEmpty &
+                                initialIngredientController.text.isNotEmpty &
                                 stepsController.text.isNotEmpty) {
-                              addRecipe(
-                                  nameController.text.toString(),
-                                  selectedCategory.toString(),
-                                  ingredientsController.text.toString(),
-                                  stepsController.text.toString());
+                              print("TODO add recipe functionality");
+
+                              // addRecipe(
+                              //     nameController.text.toString(),
+                              //     selectedCategory.toString(),
+                              //     initialIngredientController.text.toString(),
+                              //     stepsController.text.toString());
                               nameController.clear();
                               categoryController.clear();
-                              ingredientsController.clear();
+                              initialIngredientController.clear();
                               stepsController.clear();
                             } else {
                               showDialog(
                                   context: context,
-                                  builder: (context) => const CustomAlertDialog(
-                                      pretext: "Adding failed"));
+                                  builder: (context) => CustomAlertDialog(
+                                      title: "Adding failed"));
                             }
                           },
                           label: const Text("Add new recipe")),

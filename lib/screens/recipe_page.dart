@@ -18,32 +18,33 @@ class RecipeScreenState extends ConsumerState<RecipeScreen> {
   @override
   Widget build(BuildContext context) {
     var recipeId = widget.recipeId;
-    //List<NewRecipe> allRecipes = ref.watch(recipeProvider);
     var oneRecipe = ref.watch(recipeProvider.notifier).getRecipeById(recipeId);
-    //List<Widget> allAsText = allRecipes.map((e) => Text(e.name)).toList();
-    // recipeToDisplay = allRecipes.firstWhere(
-    //   (recipe) => recipe.name == nameToLook,
-    //   orElse: () => NewRecipe(
-    //       userId: "a",
-    //       id: "a",
-    //       name: "a",
-    //       ingredients: ["a"],
-    //       steps: ["a"]), // Provide a default recipe if not found);
 
     return Scaffold(
         body: SingleChildScrollView(
-            child: FutureBuilder(
-                future: oneRecipe,
-                builder: (BuildContext context, snapshot) {
-                  if (snapshot.hasData) {
-                    return Center(
-                        child: RecipeWidget(recipeToDisplay: snapshot.data!));
-                  } else if (snapshot.hasError) {
-                    return Text("error");
-                  } else {
-                    return CircularProgressIndicator();
-                  }
-                })));
+            child: Center(
+                child: Column(children: [
+      Container(
+          margin: EdgeInsets.all(30),
+          child: ElevatedButton(
+            onPressed: () {
+              context.go("/");
+            },
+            child: Text("Go home"),
+          )),
+      FutureBuilder(
+          future: oneRecipe,
+          builder: (BuildContext context, snapshot) {
+            if (snapshot.hasData) {
+              return Center(
+                  child: RecipeWidget(recipeToDisplay: snapshot.data!));
+            } else if (snapshot.hasError) {
+              return Text("error");
+            } else {
+              return CircularProgressIndicator();
+            }
+          })
+    ]))));
   }
 }
 

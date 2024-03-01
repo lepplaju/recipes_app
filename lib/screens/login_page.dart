@@ -1,10 +1,14 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:recipe_app/providers/user_provider.dart';
 import 'package:recipe_app/widgets/custom_alert.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends ConsumerStatefulWidget {
   final String type;
   const LoginPage({super.key, required this.type});
 
@@ -12,7 +16,7 @@ class LoginPage extends StatefulWidget {
   LoginPageState createState() => LoginPageState();
 }
 
-class LoginPageState extends State<LoginPage> {
+class LoginPageState extends ConsumerState<LoginPage> {
   final formkey = GlobalKey<FormState>();
   AutovalidateMode showValidationText = AutovalidateMode.disabled;
 
@@ -139,10 +143,17 @@ class LoginPageState extends State<LoginPage> {
       }
       if (!context.mounted) return;
       Navigator.of(context).pop();
+      var user = ref.watch(userProvider);
+      var dialogsubtitle = "was succesful";
+      if (user.value == null) {
+        dialogsubtitle = "failed";
+      }
       showDialog(
           context: context,
-          builder: (context) =>
-              const CustomAlertDialog(pretext: "Account creation"));
+          builder: (context) => CustomAlertDialog(
+                title: "Account creation",
+                subtitle: dialogsubtitle,
+              ));
     } else if (type == "login") {
       showDialog(
           context: context,
@@ -162,8 +173,22 @@ class LoginPageState extends State<LoginPage> {
       }
       if (!context.mounted) return;
       Navigator.of(context).pop();
-      showDialog(
-          context: context, builder: (context) => const CustomAlertDialog());
+      var user = ref.watch(userProvider);
+      var dialogsubtitle = "was succesful";
+      if (user.value == null) {
+        dialogsubtitle = "failed";
+      }
+      if (user.value != null) {
+        context.go("/");
+        Timer.run(() {
+          showDialog(
+              context: context,
+              builder: (context) => CustomAlertDialog(
+                    title: "Login",
+                    subtitle: dialogsubtitle,
+                  ));
+        });
+      }
     }
   }
 }
