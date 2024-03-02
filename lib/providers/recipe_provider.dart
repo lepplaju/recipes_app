@@ -52,7 +52,6 @@ class RecipeNotifier extends StateNotifier<List<NewRecipe>> {
   }
 
   Future<NewRecipe?> getRecipeById(String id) async {
-    print(id);
     var firestoreRecipe =
         await _firestore.collection("recipes_collection").doc(id).get();
     return NewRecipe.fromFirestore(firestoreRecipe.data()!, firestoreRecipe.id);

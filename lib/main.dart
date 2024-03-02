@@ -45,7 +45,7 @@ final GoRouter _router = GoRouter(
         GoRoute(
           path: 'temp',
           builder: (BuildContext context, GoRouterState state) {
-            return const NewRecipeCategoryPage();
+            return Scaffold(body: Text("Temporary page for debugging"));
           },
         ),
       ],

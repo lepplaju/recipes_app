@@ -4,7 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:recipe_app/models/recipe.dart';
 import 'package:recipe_app/providers/category_provider.dart';
 import 'package:recipe_app/providers/recipe_provider.dart';
+import 'package:recipe_app/providers/textFields_provider.dart';
 import 'package:recipe_app/providers/user_provider.dart';
+import 'package:recipe_app/screens/new_recipe_choose_category.dart';
 import 'package:recipe_app/widgets/custom_alert.dart';
 
 // class NewRecipePage extends ConsumerStatefulWidget {
@@ -31,18 +33,17 @@ class RecipePageState extends ConsumerState<RecipePageSW> {
     return now.microsecondsSinceEpoch.toString();
   }
 
-  late String selectedCategory;
   static const Color hintTextColor = Color(0xFF717571);
-  final categoryController = TextEditingController();
-  final initialIngredientController = TextEditingController();
-  final stepsController = TextEditingController();
-  final nameController = TextEditingController();
+  late List<TextEditingController> ingredientTextFieldControllers;
+  late List<TextEditingController> stepTextFieldControllers;
+  final initialsStepsController = TextEditingController();
+  final recipeNameController = TextEditingController();
 
-  final List<Widget> ingredientTextfieldWidgets = [
+  late final List<Widget> ingredientTextfieldWidgets = [
     Container(
       margin: const EdgeInsets.symmetric(vertical: 5),
       child: TextField(
-        controller: TextEditingController(),
+        controller: ref.watch(ingredientNotifierProvider)[0],
         decoration: const InputDecoration(
             border: OutlineInputBorder(),
             labelText: 'Ingredient',
@@ -51,11 +52,11 @@ class RecipePageState extends ConsumerState<RecipePageSW> {
     ),
   ];
   var stepIndex = 1;
-  final List<Widget> stepFieds = [
+  late final List<Widget> stepTextFieldWidgets = [
     Container(
       margin: const EdgeInsets.symmetric(vertical: 5),
       child: TextField(
-        controller: TextEditingController(),
+        controller: ref.watch(stepNotifierProvider)[0],
         decoration: const InputDecoration(
             border: OutlineInputBorder(),
             labelText: '1. step',
@@ -66,21 +67,24 @@ class RecipePageState extends ConsumerState<RecipePageSW> {
 
   @override
   build(BuildContext context) {
+    ingredientTextFieldControllers = ref.watch(ingredientNotifierProvider);
+    stepTextFieldControllers = ref.watch(stepNotifierProvider);
     //final user = ref.watch(userProvider);
-    final categories = ref.watch(categoryProvider);
-    List<TextEditingController> ingredientTextfieldControllers = [];
+    //final categories = ref.watch(categoryProvider);
+    //List<TextEditingController> ingredientTextfieldControllers = [];
     // var dropownMenuItems = [
     //   DropdownMenuEntry<String>(
     //     value: "value",
     //     label: "value",
     //   )
     // ];
-    var dropownMenuItems =
-        categories.map((category) => DropdownMenuEntry<String>(
-              value: category.name,
-              label: category.name,
-            ));
+    // var dropownMenuItems =
+    //     categories.map((category) => DropdownMenuEntry<String>(
+    //           value: category.name,
+    //           label: category.name,
+    //         ));
 
+    // Outdated: does not support multiple steps
     addRecipe(String name, String category, String ingredients, String steps) {
       var userId = ref.watch(userProvider).value!.uid;
       var mockId = idGenerator();
@@ -94,6 +98,31 @@ class RecipePageState extends ConsumerState<RecipePageSW> {
       ref.watch(recipeProvider.notifier).addRecipe(newRecipe);
     }
 
+    addNewRecipe() {
+      var name = recipeNameController.value.text;
+      List<String> steps = [];
+      List<String> ingredients = [];
+      for (var controller in ref.watch(ingredientNotifierProvider)) {
+        ingredients.add(controller.value.text);
+      }
+
+      for (var controller in ref.watch(stepNotifierProvider)) {
+        steps.add(controller.value.text);
+      }
+      var tempRecipe = NewRecipe(
+          userId: ref.watch(userProvider).value!.uid,
+          id: idGenerator(),
+          name: name,
+          steps: steps,
+          ingredients: ingredients);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                NewRecipeCategoryPage(recipeWithoutCategories: tempRecipe)),
+      );
+    }
+
     return Scaffold(
         body: SingleChildScrollView(
             child: Container(
@@ -102,32 +131,41 @@ class RecipePageState extends ConsumerState<RecipePageSW> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
+                      Container(
+                        alignment: Alignment.bottomLeft,
+                        child: ElevatedButton.icon(
+                            icon: Icon(Icons.arrow_back),
+                            onPressed: () {
+                              context.go("/");
+                            },
+                            label: const Text("Go back")),
+                      ),
                       const Text('Add a new recipe'),
                       Container(
                         margin: const EdgeInsets.all(20),
                         child: TextField(
-                            controller: nameController,
+                            controller: recipeNameController,
                             decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
                                 labelText: 'Name',
                                 labelStyle: TextStyle(color: hintTextColor))),
                       ),
-                      Container(
-                          margin: const EdgeInsets.only(
-                              top: 10, left: 20, right: 20, bottom: 20),
-                          child: Column(children: [
-                            DropdownMenu(
-                              controller: categoryController,
-                              label: const Text("Category:"),
-                              expandedInsets: EdgeInsets.zero,
-                              dropdownMenuEntries: dropownMenuItems.toList(),
-                              onSelected: (String? value) {
-                                setState(() {
-                                  selectedCategory = value!;
-                                });
-                              },
-                            ),
-                          ])),
+                      // Container( choosing a category from a dropdown:
+                      //     margin: const EdgeInsets.only(
+                      //         top: 10, left: 20, right: 20, bottom: 20),
+                      //     child: Column(children: [
+                      //       DropdownMenu(
+                      //         controller: categoryController,
+                      //         label: const Text("Category:"),
+                      //         expandedInsets: EdgeInsets.zero,
+                      //         dropdownMenuEntries: dropownMenuItems.toList(),
+                      //         onSelected: (String? value) {
+                      //           setState(() {
+                      //             selectedCategory = value!;
+                      //           });
+                      //         },
+                      //       ),
+                      //     ])),
                       Container(
                           margin: const EdgeInsets.all(20),
                           child: Column(children: [
@@ -137,22 +175,36 @@ class RecipePageState extends ConsumerState<RecipePageSW> {
                                 onPressed: () {
                                   var dynamicTextFieldController =
                                       TextEditingController();
+                                  ref
+                                      .watch(
+                                          ingredientNotifierProvider.notifier)
+                                      .addContoller(dynamicTextFieldController);
                                   setState(() {
-                                    ingredientTextfieldControllers
-                                        .add(dynamicTextFieldController);
                                     ingredientTextfieldWidgets.add(
                                       Container(
-                                        margin: const EdgeInsets.symmetric(
-                                            vertical: 5),
-                                        child: TextField(
-                                          controller: TextEditingController(),
-                                          decoration: const InputDecoration(
-                                              border: OutlineInputBorder(),
-                                              labelText: 'Ingredient',
-                                              labelStyle: TextStyle(
-                                                  color: hintTextColor)),
-                                        ),
-                                      ),
+                                          margin: const EdgeInsets.symmetric(
+                                              vertical: 5),
+                                          child: Row(children: [
+                                            Expanded(
+                                              child: TextField(
+                                                controller:
+                                                    dynamicTextFieldController,
+                                                decoration:
+                                                    const InputDecoration(
+                                                        border:
+                                                            OutlineInputBorder(),
+                                                        labelText: 'Ingredient',
+                                                        labelStyle: TextStyle(
+                                                            color:
+                                                                hintTextColor)),
+                                              ),
+                                            ),
+                                            Container(
+                                                padding:
+                                                    const EdgeInsets.all(1),
+                                                child:
+                                                    Icon(Icons.delete_forever))
+                                          ])),
                                     );
                                   });
                                 },
@@ -161,13 +213,19 @@ class RecipePageState extends ConsumerState<RecipePageSW> {
                       Container(
                           margin: const EdgeInsets.all(20),
                           child: Column(children: [
-                            ...stepFieds,
+                            ...stepTextFieldWidgets,
                             ElevatedButton.icon(
                                 icon: const Icon(Icons.add),
                                 onPressed: () {
+                                  var dynamicTextFieldController2 =
+                                      TextEditingController();
+                                  ref
+                                      .watch(stepNotifierProvider.notifier)
+                                      .addContoller(
+                                          dynamicTextFieldController2);
                                   setState(() {
                                     stepIndex += 1;
-                                    stepFieds.add(
+                                    stepTextFieldWidgets.add(
                                       Container(
                                           margin: const EdgeInsets.symmetric(
                                               vertical: 5),
@@ -175,7 +233,7 @@ class RecipePageState extends ConsumerState<RecipePageSW> {
                                             Expanded(
                                                 child: TextField(
                                               controller:
-                                                  TextEditingController(),
+                                                  dynamicTextFieldController2,
                                               decoration: InputDecoration(
                                                   border:
                                                       const OutlineInputBorder(),
@@ -200,23 +258,12 @@ class RecipePageState extends ConsumerState<RecipePageSW> {
                       ElevatedButton.icon(
                           icon: const Icon(Icons.check),
                           onPressed: () {
-                            for (var item in ingredientTextfieldControllers) {
-                              print(item.text);
-                            }
-                            if (nameController.text.isNotEmpty &
-                                initialIngredientController.text.isNotEmpty &
-                                stepsController.text.isNotEmpty) {
-                              print("TODO add recipe functionality");
-
-                              // addRecipe(
-                              //     nameController.text.toString(),
-                              //     selectedCategory.toString(),
-                              //     initialIngredientController.text.toString(),
-                              //     stepsController.text.toString());
-                              nameController.clear();
-                              categoryController.clear();
-                              initialIngredientController.clear();
-                              stepsController.clear();
+                            if (recipeNameController.text.isNotEmpty) {
+                              addNewRecipe();
+                              for (var controller
+                                  in ref.watch(ingredientNotifierProvider)) {
+                                print(controller.text);
+                              }
                             } else {
                               showDialog(
                                   context: context,
@@ -224,15 +271,10 @@ class RecipePageState extends ConsumerState<RecipePageSW> {
                                       title: "Adding failed"));
                             }
                           },
-                          label: const Text("Add new recipe")),
+                          label: const Text("Continue")),
                       const SizedBox(
                         height: 150,
                       ),
-                      ElevatedButton(
-                          onPressed: () {
-                            context.go("/");
-                          },
-                          child: const Text("Go home")),
                     ]))));
   }
 }
