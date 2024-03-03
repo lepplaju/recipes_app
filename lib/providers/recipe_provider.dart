@@ -58,6 +58,8 @@ class RecipeNotifier extends StateNotifier<List<NewRecipe>> {
   }
 
   Future<NewRecipe?> fetchRandomTrending({String? previousId}) async {
+    //await _firestore.collection('recipes_collection').   //.startAfterDocument(documentSnapshot)
+
     var randomkey = _firestore.collection("recipes_collection").doc().id;
     final recipeRef = _firestore.collection("recipes_collection");
     var query = recipeRef.where("id", isGreaterThan: previousId).limit(1);

@@ -8,6 +8,7 @@ import 'package:recipe_app/screens/new_recipe_choose_category.dart';
 import 'package:recipe_app/screens/new_recipe_page.dart';
 import 'package:recipe_app/screens/recipe_page.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:recipe_app/theme.dart';
 import 'firebase_options.dart';
 
 final GoRouter _router = GoRouter(
@@ -83,6 +84,8 @@ class StartApp extends ConsumerWidget {
     //     ));
 
     return MaterialApp.router(
-        debugShowCheckedModeBanner: false, routerConfig: _router);
+        theme: CustomTheme().getDefaultTheme(),
+        debugShowCheckedModeBanner: false,
+        routerConfig: _router);
   }
 }

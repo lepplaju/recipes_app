@@ -3,36 +3,56 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:recipe_app/providers/recipe_provider.dart';
 
-class RecipeList extends ConsumerWidget {
+class RecipeList extends ConsumerStatefulWidget {
   const RecipeList({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    var tempRecipes = ref.watch(recipeProvider);
-    //var cardsize = MediaQuery.of(context).size.width / 3;
+  RecipeListState createState() => RecipeListState();
+}
 
-    return ListView.builder(
-      itemCount: tempRecipes.length,
-      itemBuilder: (context, index) {
-        return Padding(
-            padding: const EdgeInsets.only(left: 100, right: 100, top: 20),
-            child: Card(
-                child: InkWell(
-                    onTap: () {
-                      context.go('/recipe/${tempRecipes[index].id}');
-                    },
+class RecipeListState extends ConsumerState<RecipeList> {
+  createColumnItems() {
+    var screenWidth = MediaQuery.of(context).size.width;
+
+    var containers = ref.watch(recipeProvider).map((recipe) => Container(
+        padding: EdgeInsets.only(
+            left: screenWidth / 15,
+            right: screenWidth / 15,
+            top: 20,
+            bottom: 5),
+        child: InkWell(
+            onTap: () {
+              context.go('/recipe/${recipe.id}');
+            },
+            child: Container(
+                child: Card(
                     child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(tempRecipes[index].name),
-                          Container(
-                              padding: const EdgeInsets.all(10),
-                              child: const Placeholder(
-                                fallbackHeight: 100,
-                                fallbackWidth: 100,
-                              ))
-                        ])))); //ListTile(title: Text('${tempRecipes[index].name}')));
-      },
+                  Expanded(
+                    child: Center(
+                        child: Text(
+                      recipe.name,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: screenWidth / 30),
+                    )),
+                  ),
+                  Expanded(
+                      //height: MediaQuery.of(context).size.width / 3,
+                      child: Image(
+                          height: MediaQuery.of(context).size.width / 3,
+                          image: AssetImage("assets/hamburger1.jpg")))
+                ]))))));
+    return containers;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child:
+          Column(children: [Text("List of recipes:"), ...createColumnItems()]),
     );
   }
 }

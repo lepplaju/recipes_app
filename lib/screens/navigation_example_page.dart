@@ -64,7 +64,6 @@ class _NavigationExampleState extends ConsumerState<NavigationExample> {
               currentPageIndex = index;
             });
           },
-          indicatorColor: Colors.amber,
           selectedIndex: currentPageIndex,
           destinations: navigationDestinations //<Widget>[
           //   NavigationDestination(

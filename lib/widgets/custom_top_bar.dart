@@ -32,13 +32,13 @@ class _CustomTopBarState extends ConsumerState<CustomTopBar> {
     return AppBar(
         leadingWidth: 200,
         centerTitle: true,
-        leading: user.value != null
-            ? const Center(
-                child: Column(children: [
-                Text('You are logged in!'),
-                //ElevatedButton(onPressed: logout, child: const Text('logout'))
-              ]))
-            : const Text("not logged in"),
+        leading: Center(
+          child: user.value != null
+              ? Text('You are logged in!')
+              //ElevatedButton(onPressed: logout, child: const Text('logout'))
+
+              : const Text("not logged in"),
+        ),
         // : ElevatedButton.icon(
         //     icon: const Icon(Icons.login),
         //     label: const Text('Login anonymously'),
@@ -50,7 +50,6 @@ class _CustomTopBarState extends ConsumerState<CustomTopBar> {
           Column(
             children: <Widget>[
               SearchAnchor(
-                  viewBackgroundColor: Colors.amber,
                   searchController: controller,
                   builder: (BuildContext context, SearchController controller) {
                     return Center(

@@ -53,18 +53,15 @@ class LoginPageState extends ConsumerState<LoginPage> {
                     Expanded(
                         child: Container(
                             margin: const EdgeInsets.only(right: 30),
-                            child: DecoratedBox(
-                                decoration: const BoxDecoration(
-                                    color: Colors.amberAccent),
-                                child: TextFormField(
-                                    decoration: const InputDecoration(
-                                        labelText: 'Email'),
-                                    controller: usernameController,
-                                    autovalidateMode: showValidationText,
-                                    validator: (email) => email != null &&
-                                            !EmailValidator.validate(email)
-                                        ? "Enter a valid email"
-                                        : null))))
+                            child: TextFormField(
+                                decoration:
+                                    const InputDecoration(labelText: 'Email'),
+                                controller: usernameController,
+                                autovalidateMode: showValidationText,
+                                validator: (email) => email != null &&
+                                        !EmailValidator.validate(email)
+                                    ? "Enter a valid email"
+                                    : null)))
                   ]),
                   const SizedBox(
                     height: 20,
@@ -77,20 +74,17 @@ class LoginPageState extends ConsumerState<LoginPage> {
                     Expanded(
                         child: Container(
                             margin: const EdgeInsets.only(right: 30),
-                            child: DecoratedBox(
-                                decoration: const BoxDecoration(
-                                    color: Colors.amberAccent),
-                                child: TextFormField(
-                                  decoration: const InputDecoration(
-                                      labelText: 'Password'),
-                                  controller: passwordController,
-                                  autovalidateMode: showValidationText,
-                                  validator: (password) => password != null &&
-                                          password.length < 5
+                            child: TextFormField(
+                              decoration:
+                                  const InputDecoration(labelText: 'Password'),
+                              controller: passwordController,
+                              autovalidateMode: showValidationText,
+                              validator: (password) =>
+                                  password != null && password.length < 5
                                       ? "Password length has to be 5 or longer"
                                       : null,
-                                  obscureText: true,
-                                ))))
+                              obscureText: true,
+                            )))
                   ]),
                   const SizedBox(
                     height: 20,

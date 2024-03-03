@@ -14,8 +14,15 @@ class TrendingRecipeState extends ConsumerState<TrendingRecipe> {
   // Get a random recipe based on the date
   Future<NewRecipe?> fetchTrendingRecipe() async {
     var prefs = await SharedPreferences.getInstance();
-    // int temp = (DateTime.now().day + DateTime.now().year);
-    // int savedInt = prefs.getInt("savedDay") ?? temp;
+    int temp = (DateTime.now().day + DateTime.now().year);
+    int savedDay = prefs.getInt("savedDay") ?? temp;
+    if (savedDay != temp) {
+      var newTrendingId = await ref
+          .watch(recipeProvider.notifier)
+          .fetchRandomTrending(previousId: prefs.getString("trendingDocId"))
+          .then((value) => value!.id);
+      prefs.setString("trendingDocId", newTrendingId);
+    }
     String savedDocId = prefs.getString("trendingDocId") ??
         await ref
             .watch(recipeProvider.notifier)
