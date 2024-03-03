@@ -12,9 +12,12 @@ class MainPage extends StatelessWidget {
             child: Column(children: [
       const Text('Welcome!'),
       const Text('Today\'s Trending Recipe:'),
-      Card(
-        child: TrendingRecipe(),
-      ),
+      Container(
+          width: MediaQuery.of(context).size.width / 3,
+          padding: EdgeInsets.all(10),
+          child: Card(
+            child: TrendingRecipe(),
+          )),
       Container(
           margin: const EdgeInsets.all(10),
           child: ElevatedButton(

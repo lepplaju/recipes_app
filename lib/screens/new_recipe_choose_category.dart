@@ -1,8 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:recipe_app/models/category.dart';
 import 'package:recipe_app/models/recipe.dart';
 import 'package:recipe_app/providers/category_provider.dart';
+import 'package:recipe_app/providers/recipe_provider.dart';
+import 'package:recipe_app/widgets/custom_alert.dart';
 
 class NewRecipeCategoryPage extends ConsumerStatefulWidget {
   NewRecipe recipeWithoutCategories;
@@ -16,6 +21,7 @@ class NewRecipeCategoryPageState extends ConsumerState<NewRecipeCategoryPage> {
   List<String> chosenCategories = [];
   bool showingTextField = false;
   TextEditingController newCategoryController = TextEditingController();
+  TextEditingController categoryDropdownController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final NewRecipe recipeWithoutCategories = widget.recipeWithoutCategories;
@@ -59,11 +65,16 @@ class NewRecipeCategoryPageState extends ConsumerState<NewRecipeCategoryPage> {
                           child: Row(children: [
                             Expanded(
                                 child: Container(
-                                    margin: const EdgeInsets.all(10),
+                                    margin: const EdgeInsets.only(
+                                        left: 20,
+                                        top: 10,
+                                        bottom: 10,
+                                        right: 10),
                                     child: DropdownMenu(
+                                      enableFilter: true,
+                                      controller: categoryDropdownController,
                                       onSelected: (value) =>
                                           selectedText = value!,
-                                      leadingIcon: const Icon(Icons.search),
                                       dropdownMenuEntries: dropDownItems,
                                       expandedInsets: EdgeInsets.zero,
                                     ))),
@@ -75,6 +86,7 @@ class NewRecipeCategoryPageState extends ConsumerState<NewRecipeCategoryPage> {
                                         // ONLY 3 CATEGORIES MAX PER RECIPE
                                         if (selectedText.isNotEmpty) {
                                           chosenCategories.add(selectedText);
+                                          categoryDropdownController.clear();
                                         }
                                       });
                                     },
@@ -114,6 +126,18 @@ class NewRecipeCategoryPageState extends ConsumerState<NewRecipeCategoryPage> {
                                   padding: const EdgeInsets.all(1),
                                   child: ElevatedButton.icon(
                                       onPressed: () {
+                                        if (newCategoryController
+                                            .text.isEmpty) {
+                                          showDialog(
+                                              context: context,
+                                              builder: (context) =>
+                                                  CustomAlertDialog(
+                                                    title: "Error",
+                                                    subtitle:
+                                                        "Invalid category",
+                                                  ));
+                                          return;
+                                        }
                                         var name = newCategoryController.text;
                                         var newCategory =
                                             RecipeCategory(name: name);
@@ -122,7 +146,14 @@ class NewRecipeCategoryPageState extends ConsumerState<NewRecipeCategoryPage> {
                                                 category.name.toLowerCase() ==
                                                 newCategory.name
                                                     .toLowerCase())) {
-                                          //print("category already exists!");
+                                          showDialog(
+                                              context: context,
+                                              builder: (context) =>
+                                                  CustomAlertDialog(
+                                                    title: "Error",
+                                                    subtitle:
+                                                        "Category already exists",
+                                                  ));
                                           return;
                                         } else {
                                           ref
@@ -150,7 +181,19 @@ class NewRecipeCategoryPageState extends ConsumerState<NewRecipeCategoryPage> {
                       ),
                       ElevatedButton.icon(
                           onPressed: () {
-                            print("todo functionality!");
+                            recipeWithoutCategories.categories =
+                                chosenCategories;
+                            ref
+                                .watch(recipeProvider.notifier)
+                                .addRecipe(recipeWithoutCategories);
+                            context.go("/");
+                            Timer.run(() {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => CustomAlertDialog(
+                                        title: "New Recipe created succesfully",
+                                      ));
+                            });
                           },
                           icon: Icon(Icons.check),
                           label: Text("Finish"))

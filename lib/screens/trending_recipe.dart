@@ -52,8 +52,11 @@ class TrendingRecipeState extends ConsumerState<TrendingRecipe> {
         final NewRecipe trendingRecipe = snapshot.data!;
         return Center(
             child: Container(
-                child: Column(
-                    children: [Text("recipe name: ${trendingRecipe.name}")])));
+                padding: EdgeInsets.symmetric(vertical: 5),
+                child: Column(children: [
+                  Text("recipe name: ${trendingRecipe.name}"),
+                  Text("todo clickable")
+                ])));
       },
     );
   }

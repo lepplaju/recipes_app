@@ -100,4 +100,6 @@ class NewRecipe {
       "categories": categories
     };
   }
+
+  setRecipeCategories(NewRecipe recipeToChange, List<String> categories) {}
 }

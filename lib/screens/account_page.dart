@@ -24,39 +24,41 @@ class AccountPage extends ConsumerWidget {
         .toList();
 
     return Center(
-        child: Column(children: [
-      ElevatedButton(
-        child: const Text("add recipe"),
-        onPressed: () {
-          context.go("/newRecipe");
-        },
-      ),
-      const Text("your recipes:"),
-      yourRecipes.isEmpty
-          ? const SizedBox(height: 100)
-          : Column(
-              children: [...recipeCards],
-            ),
-      const Text("your favorites: TODO"),
-      favoriteRecipes.isEmpty
-          ? const SizedBox(height: 100)
-          : Column(
-              children: [...recipeCards],
-            ),
-      SizedBox(
-        height: 200,
-      ),
-      ElevatedButton(
-          onPressed: () {
-            logout();
-            showDialog(
-                context: context,
-                builder: (context) => CustomAlertDialog(
-                      title: "Logged out",
-                    ));
-          },
-          child: Text("Log out"))
-    ]));
+        child: Container(
+            padding: EdgeInsets.only(top: 25),
+            child: Column(children: [
+              ElevatedButton(
+                child: const Text("add recipe"),
+                onPressed: () {
+                  context.go("/newRecipe");
+                },
+              ),
+              const Text("your recipes:"),
+              yourRecipes.isEmpty
+                  ? const SizedBox(height: 100)
+                  : Column(
+                      children: [...recipeCards],
+                    ),
+              const Text("your favorites: TODO"),
+              favoriteRecipes.isEmpty
+                  ? const SizedBox(height: 100)
+                  : Column(
+                      children: [...recipeCards],
+                    ),
+              SizedBox(
+                height: 200,
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    logout();
+                    showDialog(
+                        context: context,
+                        builder: (context) => CustomAlertDialog(
+                              title: "Logged out",
+                            ));
+                  },
+                  child: Text("Log out"))
+            ])));
   }
 
   Future logout() async {

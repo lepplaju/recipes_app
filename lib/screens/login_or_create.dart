@@ -7,7 +7,9 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+        body: Center(
+      child: Container(
+        margin: EdgeInsets.only(top: 25),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -31,6 +33,6 @@ class LoginScreen extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ));
   }
 }

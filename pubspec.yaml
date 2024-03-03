@@ -31,3 +31,5 @@ flutter:
   uses-material-design: true
   assets:
     - assets/hamburger1.jpg
+    - assets/recepties_logo.png
+    - assets/recepties_logo_transp.png

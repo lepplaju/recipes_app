@@ -30,9 +30,10 @@ class _CustomTopBarState extends ConsumerState<CustomTopBar> {
     final user = ref.watch(userProvider);
     List<NewRecipe> tempRecipes = ref.watch(recipeProvider);
     return AppBar(
-        leadingWidth: 200,
+        leadingWidth: 100,
         centerTitle: true,
-        leading: Center(
+        leading: Image.asset("assets/recepties_logo_transp.png"),
+        title: Center(
           child: user.value != null
               ? Text('You are logged in!')
               //ElevatedButton(onPressed: logout, child: const Text('logout'))
