@@ -24,7 +24,11 @@ class CategoriesPage extends ConsumerWidget {
                   child: Text(category.name))));
     }).toList();
     return Center(
-        child: ListView(
-            children: [const Text("Choose a category:"), ...customwidgets]));
+        child: Container(
+            padding: EdgeInsets.all(20),
+            child: ListView(children: [
+              const Center(child: Text("Choose a category:")),
+              ...customwidgets
+            ])));
   }
 }

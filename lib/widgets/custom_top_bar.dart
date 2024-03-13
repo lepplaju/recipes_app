@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:recipe_app/models/recipe.dart';
 import 'package:recipe_app/providers/recipe_provider.dart';
 import 'package:recipe_app/providers/user_provider.dart';
@@ -65,13 +66,23 @@ class _CustomTopBarState extends ConsumerState<CustomTopBar> {
                   },
                   suggestionsBuilder:
                       (BuildContext context, SearchController controller) {
-                    return tempRecipes.map((recipe) {
+                    final String filterText =
+                        controller.value.text.toLowerCase();
+                    final List<NewRecipe> filteredRecipes =
+                        tempRecipes.where((recipe) {
+                      final String recipeName = recipe.name.toLowerCase();
+
+                      return recipeName.contains(filterText);
+                    }).toList();
+
+                    return filteredRecipes.map((recipe) {
                       final String recipeName = recipe.name;
                       return ListTile(
                         title: Text(recipeName),
                         onTap: () {
                           setState(() {
                             controller.closeView(recipeName);
+                            context.go('/recipe/${recipe.id}');
                           });
                         },
                       );

@@ -19,46 +19,49 @@ class AccountPage extends ConsumerWidget {
     var favoriteRecipes = [];
     List<Widget> recipeCards = yourRecipes
         .map((recipe) => Card(
-              child: Text(recipe.name),
+              child: Container(
+                  width: 200,
+                  padding: EdgeInsets.all(10),
+                  child: Text(recipe.name)),
             ))
         .toList();
 
-    return Center(
-        child: Container(
-            padding: EdgeInsets.only(top: 25),
-            child: Column(children: [
-              ElevatedButton(
-                child: const Text("add recipe"),
-                onPressed: () {
-                  context.go("/newRecipe");
-                },
-              ),
-              const Text("your recipes:"),
-              yourRecipes.isEmpty
-                  ? const SizedBox(height: 100)
-                  : Column(
-                      children: [...recipeCards],
-                    ),
-              const Text("your favorites: TODO"),
-              favoriteRecipes.isEmpty
-                  ? const SizedBox(height: 100)
-                  : Column(
-                      children: [...recipeCards],
-                    ),
-              SizedBox(
-                height: 200,
-              ),
-              ElevatedButton(
-                  onPressed: () {
-                    logout();
-                    showDialog(
-                        context: context,
-                        builder: (context) => CustomAlertDialog(
-                              title: "Logged out",
-                            ));
-                  },
-                  child: Text("Log out"))
-            ])));
+    return SingleChildScrollView(
+        child: Center(
+            child: Container(
+                padding: EdgeInsets.only(top: 25),
+                child: Column(children: [
+                  ElevatedButton(
+                    child: const Text("add recipe"),
+                    onPressed: () {
+                      context.go("/newRecipe");
+                    },
+                  ),
+                  const Text("your recipes:"),
+                  Container(
+                    margin: EdgeInsets.all(25),
+                    child: yourRecipes.isEmpty
+                        ? const SizedBox(height: 100)
+                        : Column(children: recipeCards),
+                  ),
+                  const Text("your favorites: TODO"),
+                  favoriteRecipes.isEmpty
+                      ? const SizedBox(height: 100)
+                      : Text("FAVORITES TODO"),
+                  SizedBox(
+                    height: 100,
+                  ),
+                  ElevatedButton(
+                      onPressed: () {
+                        logout();
+                        showDialog(
+                            context: context,
+                            builder: (context) => CustomAlertDialog(
+                                  title: "Logged out",
+                                ));
+                      },
+                      child: Text("Log out"))
+                ]))));
   }
 
   Future logout() async {

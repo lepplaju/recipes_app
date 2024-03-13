@@ -51,8 +51,10 @@ class RecipeListState extends ConsumerState<RecipeList> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child:
-          Column(children: [Text("List of recipes:"), ...createColumnItems()]),
+      child: Container(
+          padding: EdgeInsets.all(20),
+          child: Column(
+              children: [Text("List of recipes:"), ...createColumnItems()])),
     );
   }
 }

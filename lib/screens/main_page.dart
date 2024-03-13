@@ -24,7 +24,7 @@ class MainPage extends StatelessWidget {
               onPressed: () {
                 context.go("/temp");
               },
-              child: const Text("Go to category page"))),
+              child: const Text("go to debug page"))),
     ])));
   }
 }
