@@ -100,7 +100,7 @@ class _NavigationExampleState extends ConsumerState<NavigationExample> {
         const MainPage(),
 
         /// Categories page
-        const CategoriesPage(),
+        CategoriesPage(),
 
         /// Recipes page
         const RecipeList(),

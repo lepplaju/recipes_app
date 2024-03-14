@@ -35,23 +35,23 @@ class CategoryNotifier extends StateNotifier<List<RecipeCategory>> {
   }
 
   // One time method used to add image to the data structure in Firebase
-  Future modifyDataStructure() async {
-    print("start of modification");
-    var snapshot = await _firestore.collection('categories').get();
-    final categories = snapshot.docs.map((doc) {
-      return {doc.id: RecipeCategory.fromFirestore(doc.data())};
-    });
+  // Future modifyDataStructure() async {
+  //   print("start of modification");
+  //   var snapshot = await _firestore.collection('categories').get();
+  //   final categories = snapshot.docs.map((doc) {
+  //     return {doc.id: RecipeCategory.fromFirestore(doc.data())};
+  //   });
 
-    categories.forEach((categoryMap) {
-      print(categoryMap);
-      categoryMap.forEach((categoryId, category) {
-        _firestore.collection('categories').doc(categoryId).update({
-          "imageUrl": "null",
-        });
-      });
-    });
-    return false;
-  }
+  //   categories.forEach((categoryMap) {
+  //     print(categoryMap);
+  //     categoryMap.forEach((categoryId, category) {
+  //       _firestore.collection('categories').doc(categoryId).update({
+  //         "imageUrl": "null",
+  //       });
+  //     });
+  //   });
+  //   return false;
+  // }
 }
 
 final categoryProvider =
