@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:recipe_app/screens/category_sceen.dart';
+import 'package:recipe_app/screens/debug_page.dart';
 import 'package:recipe_app/screens/login_page.dart';
 import 'package:recipe_app/screens/navigation_example_page.dart';
 import 'package:recipe_app/screens/new_recipe_choose_category.dart';
@@ -46,7 +47,7 @@ final GoRouter _router = GoRouter(
         GoRoute(
           path: 'temp',
           builder: (BuildContext context, GoRouterState state) {
-            return Scaffold(body: Text("Temporary page for debugging"));
+            return DebugPage();
           },
         ),
       ],

@@ -36,16 +36,17 @@ class Recipe {
     };
   }
 
-  Map<String, dynamic> updateDataStructure() {
-    return {
-      "userId": userId,
-      'id': id,
-      'name': name,
-      'ingredients': ingredients,
-      'steps': steps,
-      "categories": [category]
-    };
-  }
+  // Temporary solution to match the structure in Firebase
+  // Map<String, dynamic> updateDataStructure() {
+  //   return {
+  //     "userId": userId,
+  //     'id': id,
+  //     'name': name,
+  //     'ingredients': ingredients,
+  //     'steps': steps,
+  //     "categories": [category]
+  //   };
+  // }
 }
 
 // End of original recipe
