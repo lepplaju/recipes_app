@@ -1,8 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:recipe_app/models/recipe.dart';
+import 'package:recipe_app/providers/debug_provider.dart';
 import 'package:recipe_app/providers/recipe_provider.dart';
+import 'package:recipe_app/providers/user_provider.dart';
 
 class RecipeList extends ConsumerStatefulWidget {
   const RecipeList({super.key});
@@ -15,6 +18,8 @@ class RecipeListState extends ConsumerState<RecipeList> {
   bool? showRecipe;
   NewRecipe? chosenRecipe;
   double containerWidth = 0;
+  var user;
+
   createColumnItems() {
     var screenWidth = MediaQuery.of(context).size.width;
     var containers = ref.watch(recipeProvider).map((recipe) => Container(
@@ -72,12 +77,31 @@ class RecipeListState extends ConsumerState<RecipeList> {
               containerWidth = 0;
             });
           },
-          child: Text("close recipe"))
+          child: Text("close recipe")),
+      SizedBox(
+        height: 25,
+      ),
+      user != null && user!.value != null
+          ? Align(
+              alignment: Alignment.bottomRight,
+              child: IconButton(
+                  onPressed: () {
+                    print("user: ${user!.value!.uid}");
+                    print('reicpe ${chosenRecipe!.id}');
+                    ref
+                        .watch(favoritesProvider.notifier)
+                        .addFavoriteToUser(user!.value!.uid, chosenRecipe!.id);
+                  },
+                  icon: Icon(Icons.star_border)),
+            )
+          : SizedBox(),
     ])));
   }
 
   @override
   Widget build(BuildContext context) {
+    user = ref.watch(userProvider);
+    //print(user);
     double screenWidth = MediaQuery.of(context).size.width;
     return Container(
       padding: EdgeInsets.all(20),
@@ -97,13 +121,7 @@ class RecipeListState extends ConsumerState<RecipeList> {
                       showRecipe! &&
                       chosenRecipe != null &&
                       screenWidth >= 800
-                  ? AnimatedContainer(
-                      duration: Duration(seconds: 1),
-                      width: containerWidth,
-                      child: Expanded(
-                          child: Container(
-                              alignment: Alignment.topCenter,
-                              child: showChosenRecipe())))
+                  ? Container(width: containerWidth, child: showChosenRecipe())
                   : SizedBox(),
             ]),
     );
