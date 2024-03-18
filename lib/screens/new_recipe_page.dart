@@ -123,159 +123,157 @@ class RecipePageState extends ConsumerState<RecipePageSW> {
       );
     }
 
+    var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
         body: SingleChildScrollView(
-            child: Container(
-                margin: const EdgeInsets.all(20),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        alignment: Alignment.bottomLeft,
-                        child: ElevatedButton.icon(
-                            icon: Icon(Icons.arrow_back),
-                            onPressed: () {
-                              context.go("/");
-                            },
-                            label: const Text("Go back")),
-                      ),
-                      const Text('Add a new recipe'),
-                      Container(
+            child: Column(children: [
+      Container(
+        margin: EdgeInsets.only(left: 30, top: 30),
+        alignment: Alignment.bottomLeft,
+        child: ElevatedButton.icon(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              context.go("/");
+            },
+            label: const Text("Go back")),
+      ),
+      Center(
+          child: Container(
+              width: screenWidth > 800 ? screenWidth / 2 : screenWidth,
+              margin: const EdgeInsets.all(20),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const Text('Add a new recipe'),
+                    Container(
+                      margin: const EdgeInsets.all(20),
+                      child: TextField(
+                          controller: recipeNameController,
+                          decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: 'Name',
+                              labelStyle: TextStyle(color: hintTextColor))),
+                    ),
+                    // Container( choosing a category from a dropdown:
+                    //     margin: const EdgeInsets.only(
+                    //         top: 10, left: 20, right: 20, bottom: 20),
+                    //     child: Column(children: [
+                    //       DropdownMenu(
+                    //         controller: categoryController,
+                    //         label: const Text("Category:"),
+                    //         expandedInsets: EdgeInsets.zero,
+                    //         dropdownMenuEntries: dropownMenuItems.toList(),
+                    //         onSelected: (String? value) {
+                    //           setState(() {
+                    //             selectedCategory = value!;
+                    //           });
+                    //         },
+                    //       ),
+                    //     ])),
+                    Container(
                         margin: const EdgeInsets.all(20),
-                        child: TextField(
-                            controller: recipeNameController,
-                            decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText: 'Name',
-                                labelStyle: TextStyle(color: hintTextColor))),
-                      ),
-                      // Container( choosing a category from a dropdown:
-                      //     margin: const EdgeInsets.only(
-                      //         top: 10, left: 20, right: 20, bottom: 20),
-                      //     child: Column(children: [
-                      //       DropdownMenu(
-                      //         controller: categoryController,
-                      //         label: const Text("Category:"),
-                      //         expandedInsets: EdgeInsets.zero,
-                      //         dropdownMenuEntries: dropownMenuItems.toList(),
-                      //         onSelected: (String? value) {
-                      //           setState(() {
-                      //             selectedCategory = value!;
-                      //           });
-                      //         },
-                      //       ),
-                      //     ])),
-                      Container(
-                          margin: const EdgeInsets.all(20),
-                          child: Column(children: [
-                            ...ingredientTextfieldWidgets,
-                            ElevatedButton.icon(
-                                icon: const Icon(Icons.add),
-                                onPressed: () {
-                                  var dynamicTextFieldController =
-                                      TextEditingController();
-                                  ref
-                                      .watch(
-                                          ingredientNotifierProvider.notifier)
-                                      .addContoller(dynamicTextFieldController);
-                                  setState(() {
-                                    ingredientTextfieldWidgets.add(
-                                      Container(
-                                          margin: const EdgeInsets.symmetric(
-                                              vertical: 5),
-                                          child: Row(children: [
-                                            Expanded(
-                                              child: TextField(
-                                                controller:
-                                                    dynamicTextFieldController,
-                                                decoration:
-                                                    const InputDecoration(
-                                                        border:
-                                                            OutlineInputBorder(),
-                                                        labelText: 'Ingredient',
-                                                        labelStyle: TextStyle(
-                                                            color:
-                                                                hintTextColor)),
-                                              ),
-                                            ),
-                                            Container(
-                                                padding:
-                                                    const EdgeInsets.all(1),
-                                                child:
-                                                    Icon(Icons.delete_forever))
-                                          ])),
-                                    );
-                                  });
-                                },
-                                label: const Text("new ingredient"))
-                          ])),
-                      Container(
-                          margin: const EdgeInsets.all(20),
-                          child: Column(children: [
-                            ...stepTextFieldWidgets,
-                            ElevatedButton.icon(
-                                icon: const Icon(Icons.add),
-                                onPressed: () {
-                                  var dynamicTextFieldController2 =
-                                      TextEditingController();
-                                  ref
-                                      .watch(stepNotifierProvider.notifier)
-                                      .addContoller(
-                                          dynamicTextFieldController2);
-                                  setState(() {
-                                    stepIndex += 1;
-                                    stepTextFieldWidgets.add(
-                                      Container(
-                                          margin: const EdgeInsets.symmetric(
-                                              vertical: 5),
-                                          child: Row(children: [
-                                            Expanded(
-                                                child: TextField(
+                        child: Column(children: [
+                          ...ingredientTextfieldWidgets,
+                          ElevatedButton.icon(
+                              icon: const Icon(Icons.add),
+                              onPressed: () {
+                                var dynamicTextFieldController =
+                                    TextEditingController();
+                                ref
+                                    .watch(ingredientNotifierProvider.notifier)
+                                    .addContoller(dynamicTextFieldController);
+                                setState(() {
+                                  ingredientTextfieldWidgets.add(
+                                    Container(
+                                        margin: const EdgeInsets.symmetric(
+                                            vertical: 5),
+                                        child: Row(children: [
+                                          Expanded(
+                                            child: TextField(
                                               controller:
-                                                  dynamicTextFieldController2,
-                                              decoration: InputDecoration(
-                                                  border:
-                                                      const OutlineInputBorder(),
-                                                  labelText: '$stepIndex. step',
-                                                  labelStyle: const TextStyle(
+                                                  dynamicTextFieldController,
+                                              decoration: const InputDecoration(
+                                                  border: OutlineInputBorder(),
+                                                  labelText: 'Ingredient',
+                                                  labelStyle: TextStyle(
                                                       color: hintTextColor)),
-                                            )),
-                                            Container(
-                                                padding:
-                                                    const EdgeInsets.all(1),
-                                                child: const Icon(
-                                                    Icons.delete_forever)),
-                                          ])),
-                                    );
-                                  });
-                                },
-                                label: const Text("new step"))
-                          ])),
-                      const SizedBox(
-                        height: 100,
-                      ),
-                      ElevatedButton.icon(
-                          icon: const Icon(Icons.check),
-                          onPressed: () {
-                            if (recipeNameController.text.isNotEmpty) {
-                              addNewRecipe();
-                              for (var controller
-                                  in ref.watch(ingredientNotifierProvider)) {
-                                print(controller.text);
-                              }
-                            } else {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) => CustomAlertDialog(
-                                      title: "Adding failed"));
+                                            ),
+                                          ),
+                                          Container(
+                                              padding: const EdgeInsets.all(1),
+                                              child: Icon(Icons.delete_forever))
+                                        ])),
+                                  );
+                                });
+                              },
+                              label: const Text("new ingredient"))
+                        ])),
+                    Container(
+                        margin: const EdgeInsets.all(20),
+                        child: Column(children: [
+                          ...stepTextFieldWidgets,
+                          ElevatedButton.icon(
+                              icon: const Icon(Icons.add),
+                              onPressed: () {
+                                var dynamicTextFieldController2 =
+                                    TextEditingController();
+                                ref
+                                    .watch(stepNotifierProvider.notifier)
+                                    .addContoller(dynamicTextFieldController2);
+                                setState(() {
+                                  stepIndex += 1;
+                                  stepTextFieldWidgets.add(
+                                    Container(
+                                        margin: const EdgeInsets.symmetric(
+                                            vertical: 5),
+                                        child: Row(children: [
+                                          Expanded(
+                                              child: TextField(
+                                            controller:
+                                                dynamicTextFieldController2,
+                                            decoration: InputDecoration(
+                                                border:
+                                                    const OutlineInputBorder(),
+                                                labelText: '$stepIndex. step',
+                                                labelStyle: const TextStyle(
+                                                    color: hintTextColor)),
+                                          )),
+                                          Container(
+                                              padding: const EdgeInsets.all(1),
+                                              child: const Icon(
+                                                  Icons.delete_forever)),
+                                        ])),
+                                  );
+                                });
+                              },
+                              label: const Text("new step"))
+                        ])),
+                    const SizedBox(
+                      height: 100,
+                    ),
+                    ElevatedButton.icon(
+                        icon: const Icon(Icons.check),
+                        onPressed: () {
+                          if (recipeNameController.text.isNotEmpty) {
+                            addNewRecipe();
+                            for (var controller
+                                in ref.watch(ingredientNotifierProvider)) {
+                              print(controller.text);
                             }
-                          },
-                          label: const Text("Continue")),
-                      const SizedBox(
-                        height: 150,
-                      ),
-                    ]))));
+                          } else {
+                            showDialog(
+                                context: context,
+                                builder: (context) =>
+                                    CustomAlertDialog(title: "Adding failed"));
+                          }
+                        },
+                        label: const Text("Continue")),
+                    const SizedBox(
+                      height: 150,
+                    ),
+                  ])))
+    ])));
   }
 }
 

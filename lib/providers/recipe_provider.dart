@@ -97,6 +97,18 @@ class RecipeNotifier extends StateNotifier<List<NewRecipe>> {
     // }
   }
 
+  Future<List<NewRecipe>> getUserRecipes(String userIdParam) async {
+    var recipeRef = await _firestore
+        .collection("recipes_collection")
+        .where("userId", isEqualTo: userIdParam)
+        .get();
+    var userRecipes = recipeRef.docs.map((doc) {
+      return NewRecipe.fromFirestore(doc.data(), doc.id);
+    }).toList();
+    print(userRecipes.runtimeType);
+    return userRecipes;
+  }
+
 // Temporary function used to modify the data structure in firebase
 /*
   void updateAllRecipes() async {
