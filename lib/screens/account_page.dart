@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:recipe_app/models/recipe.dart';
-import 'package:recipe_app/providers/debug_provider.dart';
+import 'package:recipe_app/providers/favorites_provider.dart';
 import 'package:recipe_app/providers/recipe_provider.dart';
 import 'package:recipe_app/providers/user_provider.dart';
 import 'package:recipe_app/widgets/custom_alert.dart';
@@ -86,7 +86,8 @@ class AccountPageState extends ConsumerState<AccountPage> {
                                                   padding: EdgeInsets.all(5),
                                                   child: IconButton(
                                                       onPressed: () {
-                                                        print("todo edit");
+                                                        context.go(
+                                                            "/modifyRecipe/${recipe.id}");
                                                       },
                                                       icon: Icon(Icons.edit)),
                                                 )

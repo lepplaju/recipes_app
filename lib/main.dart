@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:recipe_app/screens/category_sceen.dart';
 import 'package:recipe_app/screens/debug_page.dart';
 import 'package:recipe_app/screens/login_page.dart';
+import 'package:recipe_app/screens/modifying_recipe_page.dart';
 import 'package:recipe_app/screens/navigation_example_page.dart';
 import 'package:recipe_app/screens/new_recipe_choose_category.dart';
 import 'package:recipe_app/screens/new_recipe_page.dart';
@@ -44,6 +45,12 @@ final GoRouter _router = GoRouter(
             return const RecipePageSW();
           },
         ),
+        GoRoute(
+            path: "modifyRecipe/:recipeId",
+            builder: (BuildContext context, GoRouterState state) {
+              return ModifyingRecipe(
+                  recipeId: state.pathParameters["recipeId"]!);
+            }),
         GoRoute(
           path: 'temp',
           builder: (BuildContext context, GoRouterState state) {
