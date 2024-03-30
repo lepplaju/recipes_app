@@ -85,18 +85,18 @@ class RecipePageState extends ConsumerState<RecipePageSW> {
     //         ));
 
     // Outdated: does not support multiple steps
-    addRecipe(String name, String category, String ingredients, String steps) {
-      var userId = ref.watch(userProvider).value!.uid;
-      var mockId = idGenerator();
-      var newRecipe = NewRecipe(
-          userId: userId,
-          id: mockId,
-          name: name,
-          categories: [category],
-          ingredients: [ingredients],
-          steps: [steps]);
-      ref.watch(recipeProvider.notifier).addRecipe(newRecipe);
-    }
+    // addRecipe(String name, String category, String ingredients, String steps) {
+    //   var userId = ref.watch(userProvider).value!.uid;
+    //   var mockId = idGenerator();
+    //   var newRecipe = NewRecipe(
+    //       userId: userId,
+    //       id: mockId,
+    //       name: name,
+    //       categories: [category],
+    //       ingredients: [ingredients],
+    //       steps: [steps]);
+    //   ref.watch(recipeProvider.notifier).addRecipe(newRecipe);
+    // }
 
     addNewRecipe() {
       var name = recipeNameController.value.text;
@@ -145,7 +145,7 @@ class RecipePageState extends ConsumerState<RecipePageSW> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const Text('Add a new recipe'),
+                    const Text('Adding a new recipe'),
                     Container(
                       margin: const EdgeInsets.all(20),
                       child: TextField(
